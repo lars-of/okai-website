@@ -614,7 +614,7 @@ export default function HomePage() {
       {/* ============================================
           S11: KONTAKT – Weiß
           ============================================ */}
-      <section className="py-20 bg-white">
+      <section id="kontakt" className="py-20 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="mb-4">Lass uns reden.</h2>
           <p className="text-dark-gray mb-12 max-w-lg">

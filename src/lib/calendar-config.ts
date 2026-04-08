@@ -12,8 +12,9 @@
 export const BOOKING_EMAIL = "lars@fieck.de";
 // export const BOOKING_EMAIL = "hallo@ok-ai.de";  // <- später umstellen
 
-/* iCal-URL zum Lesen der belegten Zeiten */
+/* iCal-URL zum Lesen der belegten Zeiten (aus Umgebungsvariable oder Fallback) */
 export const ICAL_URL =
+  process.env.ICAL_URL ||
   "https://p34-caldav.icloud.com/published/2/ODQzMzc3MjE4NDMzNzcyMZbMUAFT1C_TG0kHkkDvmFRLHQxtSgp_yqFkHmFtlIVw0AuFFRUHI3pjVWMLp4lqx0gKXNfQWSoK_rm_5aQPhRQ";
 
 /* Buchbare Wochentage: 1=Mo, 2=Di, 3=Mi, 4=Do, 5=Fr */

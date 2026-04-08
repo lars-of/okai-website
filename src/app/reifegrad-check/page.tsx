@@ -81,7 +81,7 @@ export default function ReifegradCheckPage() {
           Kostenlos · Kein Login · Sofortergebnis · 7 Dimensionen
         </p>
         <Link
-          href="/reifegrad-check"
+          href="/reifegrad-check/test"
           className="inline-flex items-center gap-2 bg-bright-red text-white font-semibold px-6 py-3 okai-shape-sm hover:opacity-90 transition-opacity mb-16"
         >
           Check jetzt starten <IconArrowRight size={16} />
@@ -144,7 +144,7 @@ export default function ReifegradCheckPage() {
         </div>
         <div className="mt-6">
           <Link
-            href="/reifegrad-check"
+            href="/reifegrad-check/test"
             className="inline-flex items-center gap-2 bg-bright-red text-white font-semibold px-6 py-3 okai-shape-sm hover:opacity-90 transition-opacity"
           >
             Check starten <IconArrowRight size={16} />

@@ -34,11 +34,13 @@ const LABEL_OFFSET = 28;
 
 interface RadarChartProps {
   className?: string;
+  /** Optionale echte Werte (0-1 pro Kategorie). Ohne Props werden Beispielwerte gezeigt. */
+  scores?: number[];
 }
 
 /**
  * Berechnet die x/y-Position eines Punktes auf dem Radar.
- * index = Achsenindex, value = Wert zwischen 0 und 1
+ * index = Achsenindex, value = Wert zwischen 0 und 1 (Anteil am Maximum)
  */
 function getPoint(index: number, value: number, total: number) {
   // Start oben (bei -90 Grad), dann im Uhrzeigersinn
@@ -50,7 +52,7 @@ function getPoint(index: number, value: number, total: number) {
 }
 
 /**
- * Erzeugt die Punkte-Zeichenkette fuer ein Polygon auf einer bestimmten Stufe.
+ * Erzeugt die Punkte-Zeichenkette für ein Polygon auf einer bestimmten Stufe.
  */
 function getPolygonPoints(values: number[], total: number): string {
   return values
@@ -62,7 +64,7 @@ function getPolygonPoints(values: number[], total: number): string {
 }
 
 /**
- * Erzeugt die Punkte fuer ein gleichmaessiges Heptagon (Gitterebene).
+ * Erzeugt die Punkte für ein gleichmäßiges Heptagon (Gitterebene).
  */
 function getGridPolygonPoints(level: number, total: number): string {
   return Array.from({ length: total }, (_, i) => {
@@ -72,7 +74,7 @@ function getGridPolygonPoints(level: number, total: number): string {
 }
 
 /**
- * Berechnet die Label-Position ausserhalb des Charts.
+ * Berechnet die Label-Position außerhalb des Charts.
  */
 function getLabelPosition(index: number, total: number) {
   const angle = (2 * Math.PI * index) / total - Math.PI / 2;
@@ -84,7 +86,7 @@ function getLabelPosition(index: number, total: number) {
 }
 
 /**
- * Bestimmt die Textausrichtung abhaengig von der Position auf dem Kreis.
+ * Bestimmt die Textausrichtung abhängig von der Position auf dem Kreis.
  */
 function getTextAnchor(index: number, total: number): "start" | "middle" | "end" {
   const angle = (2 * Math.PI * index) / total - Math.PI / 2;
@@ -94,7 +96,7 @@ function getTextAnchor(index: number, total: number): "start" | "middle" | "end"
 }
 
 /**
- * Bestimmt die vertikale Ausrichtung des Labels.
+ * Bestimmt die vertikale Textausrichtung des Labels.
  */
 function getDominantBaseline(index: number, total: number): "auto" | "middle" | "hanging" {
   const angle = (2 * Math.PI * index) / total - Math.PI / 2;
@@ -103,9 +105,10 @@ function getDominantBaseline(index: number, total: number): "auto" | "middle" | 
   return sinVal > 0 ? "hanging" : "auto";
 }
 
-export function RadarChart({ className }: RadarChartProps) {
+export function RadarChart({ className, scores }: RadarChartProps) {
   const total = CATEGORIES.length;
-  const dataPoints = SAMPLE_SCORES.map((score, i) => getPoint(i, score, total));
+  const activeScores = scores ?? SAMPLE_SCORES;
+  const dataPoints = activeScores.map((score, i) => getPoint(i, score, total));
 
   return (
     <svg
@@ -161,7 +164,7 @@ export function RadarChart({ className }: RadarChartProps) {
 
       {/* Daten-Polygon (gefuellt mit Gradient) */}
       <polygon
-        points={getPolygonPoints(SAMPLE_SCORES, total)}
+        points={getPolygonPoints(activeScores, total)}
         fill="url(#dataGradient)"
         stroke={COLORS.brightRed}
         strokeWidth={2}

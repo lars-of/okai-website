@@ -66,7 +66,7 @@ export function Navigation() {
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="md:hidden p-2 text-white"
-            aria-label="Menü öffnen"
+            aria-label={mobileOpen ? "Menü schließen" : "Menü öffnen"}
           >
             {mobileOpen ? <IconClose size={24} /> : <IconMenu size={24} />}
           </button>
