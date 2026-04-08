@@ -15,11 +15,11 @@ const COLORS = {
 const CATEGORIES = [
   "Strategie",
   "Prozesse",
-  "Daten",
-  "Technologie",
-  "Kompetenz",
-  "Kultur",
-  "Governance",
+  "Daten & Systeme",
+  "Werkzeuge & Tools",
+  "Wissen im Team",
+  "Kultur & Haltung",
+  "Regeln & Verantwortung",
 ];
 
 // Beispielwerte (niedrig bis mittel, 25-55%)
