@@ -131,84 +131,86 @@ const cases = [
 export default function HomePage() {
   return (
     <>
-      {/* TÜV-Störer */}
-      <div className="bg-black text-off-white flex items-center justify-center gap-2 py-2 px-4">
-        <IconStar size={16} className="text-off-white shrink-0" />
-        <p className="text-[0.8rem] font-medium tracking-[0.06em] text-center">
-          TÜV-zertifizierter Manager für angewandte KI-Transformation · 16 Module · Geprüfte Kompetenz
-        </p>
-      </div>
-
-      {/* Hero */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+      {/* S2: Hero – großzügig, eleganter Fullscreen-Hero mit viel Luft */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-24 md:pt-28 md:pb-32">
+        <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+          {/* Links: Text */}
           <div>
-            <p className="eyebrow mb-4">KI-Beratung für KMU · Hamburg</p>
+            <p className="eyebrow mb-5">KI-Beratung für KMU · Hamburg</p>
             <h1 className="mb-6">
               KI made simple –<br />
               für KMU die wirklich<br />
               loslegen wollen.
             </h1>
-            <p className="text-dark-gray text-lg mb-8 max-w-lg">
+            <p className="text-dark-gray text-lg leading-relaxed mb-10 max-w-lg">
               Kein Hype. Kein Buzzword-Theater. Was KI für deinen Betrieb bedeutet – konkret, verständlich, mit echtem Ergebnis.
             </p>
-            <div className="flex flex-wrap gap-4 mb-6">
+            <div className="flex flex-wrap gap-4 mb-8">
               <Link
                 href="/reifegrad-check"
-                className="inline-flex items-center gap-2 bg-bright-red text-white font-semibold px-6 py-3 okai-shape-sm hover:opacity-90 transition-opacity"
+                className="inline-flex items-center gap-2 bg-bright-red text-white font-semibold px-7 py-3.5 okai-shape-sm hover:opacity-90 transition-opacity"
               >
                 KI-Reifegrad-Check starten
                 <IconArrowRight size={16} />
               </Link>
               <a
                 href="#mastery-roadmap"
-                className="inline-flex items-center gap-2 border-2 border-black text-black font-semibold px-6 py-3 okai-shape-sm hover:bg-black hover:text-off-white transition-colors"
+                className="inline-flex items-center gap-2 border-2 border-black text-black font-semibold px-7 py-3.5 okai-shape-sm hover:bg-black hover:text-off-white transition-colors"
               >
                 Wie es funktioniert
               </a>
             </div>
-            <div className="flex flex-wrap gap-4 text-sm text-dark-gray">
+            <div className="flex flex-wrap gap-5 text-sm text-dark-gray">
               <span className="flex items-center gap-1.5"><IconCheck size={16} className="text-bright-red" /> Kostenlos</span>
               <span className="flex items-center gap-1.5"><IconCheck size={16} className="text-bright-red" /> Kein Login</span>
               <span className="flex items-center gap-1.5"><IconCheck size={16} className="text-bright-red" /> Sofortergebnis</span>
             </div>
           </div>
+
+          {/* Rechts: Portrait im Anschnitt + TÜV-Testmark */}
           <div className="relative">
-            <Image
-              src="/assets/lars-hero.png"
-              alt="Lars Fiëck – Strategy Director & AI Consultant"
-              width={500}
-              height={650}
-              className="rounded-2xl object-cover w-full max-w-md mx-auto"
-              priority
-            />
-            <div className="mt-4 flex items-center gap-3 justify-center">
+            <div className="overflow-hidden okai-shape-lg h-[420px] md:h-[520px]">
+              <Image
+                src="/assets/lars-hero.png"
+                alt="Lars Fiëck – Strategy Director & AI Consultant"
+                width={480}
+                height={600}
+                className="object-cover object-top w-full h-full scale-105"
+                priority
+              />
+            </div>
+            {/* TÜV-Testmark als schwebendes Badge */}
+            <div className="absolute -bottom-5 left-4 bg-white/95 backdrop-blur-sm okai-shape-md px-4 py-3 shadow-lg flex items-center gap-3">
               <Image
                 src="/assets/tuev-testmark.jpg"
                 alt="TÜV-Testmark"
-                width={60}
-                height={60}
-                className="h-14 w-auto object-contain"
+                width={48}
+                height={48}
+                className="h-11 w-auto object-contain shrink-0"
               />
-              <p className="caption">TÜV-zertifizierter Manager für<br />angewandte KI-Transformation</p>
+              <p className="text-[0.7rem] leading-snug text-dark-gray font-medium">
+                TÜV-zertifizierter Manager<br />
+                für angewandte KI-Transformation
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Trust-Logos */}
-      <section className="py-10 border-y border-sand-border">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="eyebrow text-center mb-6">Vertrauen von</p>
-          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
-            {trustLogos.map((logo) => (
+      {/* S3: Trust-Logos – Animiertes Carousel, infinite scroll */}
+      <section className="py-10 border-y border-sand-border overflow-hidden">
+        <p className="eyebrow text-center mb-6">Vertrauen von</p>
+        <div className="trust-carousel">
+          <div className="trust-carousel-track">
+            {/* Doppelte Logos für nahtlosen Loop */}
+            {[...trustLogos, ...trustLogos].map((logo, i) => (
               <Image
-                key={logo.alt}
+                key={`${logo.alt}-${i}`}
                 src={logo.src}
                 alt={logo.alt}
-                width={120}
-                height={32}
-                className="h-8 w-auto object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all"
+                width={180}
+                height={80}
+                className="h-16 md:h-20 w-auto object-contain shrink-0 mx-8 md:mx-12"
               />
             ))}
           </div>
@@ -382,8 +384,41 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Kontakt */}
+      {/* S11: Über Lars (kurz) */}
       <section className="py-20 bg-off-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="overflow-hidden okai-shape-lg h-[400px] md:h-[480px]">
+              <Image
+                src="/assets/lars-ganzkoerper.jpg"
+                alt="Lars Fiëck"
+                width={500}
+                height={650}
+                className="object-cover object-top w-full h-full"
+              />
+            </div>
+            <div>
+              <p className="eyebrow mb-3">Über Lars</p>
+              <h2 className="mb-6">Strategy Director, Mentor und TÜV-zertifizierter Berater für angewandte KI-Transformation.</h2>
+              <p className="text-dark-gray mb-4">
+                Sein Hintergrund reicht von Bankausbildung und BWL bis zu vielen Jahren in Strategie und Beratung mit Einblicken in unterschiedlichste Branchen – von Finanzen, Automobil und Konsumgütern bis zu Industrie, Verbänden und Sport.
+              </p>
+              <p className="text-dark-gray mb-4">
+                Heute unterstützt er Unternehmen dabei, KI nicht als Hype zu betrachten, sondern als anwendbaren Hebel für bessere Entscheidungen, wirksamere Prozesse und neue Formen der Zusammenarbeit. Sein Fokus liegt auf verständlicher Vermittlung, praxisnaher Umsetzung und der Frage, wie KI im Alltag wirklich anschlussfähig wird. Strategisch, technisch, menschlich.
+              </p>
+              <p className="text-dark-gray mb-8">
+                Denn KI einzuführen bedeutet nicht nur, neue Technologien zu nutzen, sondern Veränderung sinnvoll zu gestalten.
+              </p>
+              <Link href="/ueber-lars" className="inline-flex items-center gap-2 text-sm font-semibold hover:text-bright-red transition-colors">
+                Mehr über Lars <IconArrowRight size={14} />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Kontakt */}
+      <section className="py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="mb-4">Lass uns reden.</h2>
           <p className="text-dark-gray mb-12 max-w-lg">

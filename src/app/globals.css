@@ -80,3 +80,42 @@ h3 {
 .okai-shape-lg {
   border-radius: 0 20px 20px 0;
 }
+
+/* ============================================
+   Trust-Logo Carousel – infinite scroll
+   ============================================ */
+
+.trust-carousel {
+  width: 100%;
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+}
+
+.trust-carousel-track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  animation: scroll-logos 30s linear infinite;
+}
+
+@keyframes scroll-logos {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
