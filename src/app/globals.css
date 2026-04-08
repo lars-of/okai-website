@@ -66,19 +66,19 @@ h3 {
    Links eckig, rechts rund
    ============================================ */
 
-/* Klein (Buttons, Tags) */
+/* Klein (Buttons, Tags) – rechts Halbkreis */
 .okai-shape-sm {
-  border-radius: 0 8px 8px 0;
+  border-radius: 0 9999px 9999px 0;
 }
 
-/* Mittel (Karten) */
+/* Mittel (Karten) – rechts Halbkreis */
 .okai-shape-md {
-  border-radius: 0 14px 14px 0;
+  border-radius: 0 9999px 9999px 0;
 }
 
-/* Groß (Sektionen, Overlays) */
+/* Groß (Sektionen, Overlays) – rechts Halbkreis */
 .okai-shape-lg {
-  border-radius: 0 20px 20px 0;
+  border-radius: 0 9999px 9999px 0;
 }
 
 /* ============================================
