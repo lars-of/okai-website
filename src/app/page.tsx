@@ -75,14 +75,68 @@ const effieAwards = [
   { name: "Leica PaperSkin for Fedrigoni", href: "https://www.youtube.com/watch?v=Ip0smfIDQW4" },
 ];
 
-/* Problemkarten – Platzhalter, Inhalte kommen per MD vom Kunden */
+/* Problemkarten – 10 echte Herausforderungen nach Branche & Größe */
 const problems = [
-  { text: "\u201eIch wei\u00df nicht, wo ich mit KI anfangen soll.\u201c", headline: "KMU \u00b7 10\u201350 Mitarbeiter", href: "/reifegrad-check" },
-  { text: "\u201eMein Team nutzt KI \u2013 aber ohne Plan und ohne Ergebnis.\u201c", headline: "Dienstleistung \u00b7 50\u2013250 MA", href: "/ai-license" },
-  { text: "\u201eWir verpassen Anrufe nach 17 Uhr \u2013 das kostet uns Auftr\u00e4ge.\u201c", headline: "Handwerk \u00b7 1\u201310 MA", href: "/mastery-roadmap#autopilot" },
-  { text: "\u201eWir wissen, dass KI hilft \u2013 aber nicht welcher Prozess zuerst.\u201c", headline: "Handel \u00b7 50\u2013250 MA", href: "/mastery-roadmap#roadmap" },
-  { text: "\u201eIch will KI einsetzen, aber rechtlich auf der sicheren Seite sein.\u201c", headline: "Finanzen \u00b7 250+ MA", href: "/mastery-roadmap#durchblick" },
-  { text: "\u201eWir haben eine Idee f\u00fcr KI \u2013 aber keinen Prototyp.\u201c", headline: "Marketing \u00b7 10\u201350 MA", href: "/mastery-roadmap#loesung" },
+  {
+    headline: "Schreinerei \u00b7 3 MA \u00b7 Handwerk",
+    text: "\u201eDas Telefon klingelt st\u00e4ndig \u2013 aber ich steh an der S\u00e4ge. Kunden erreichen mich nicht, Auftr\u00e4ge gehen verloren.\u201c",
+    produkt: "Instant Telefon-Bot",
+    href: "/mastery-roadmap#autopilot",
+  },
+  {
+    headline: "Elektrobetrieb \u00b7 8 MA \u00b7 Handwerk",
+    text: "\u201e\u00dcberall hei\u00dft es \u201aKI ver\u00e4ndert alles\u2018 \u2013 aber was soll ich als kleiner Betrieb damit anfangen?\u201c",
+    produkt: "KI-Reifegrad-Check",
+    href: "/reifegrad-check",
+  },
+  {
+    headline: "Steuerkanzlei \u00b7 12 MA \u00b7 Dienstleistung",
+    text: "\u201eWir nutzen Tools mit KI \u2013 aber ich habe keine Ahnung, ob wir seit dem EU AI Act compliant sind.\u201c",
+    produkt: "EU-AI Schulung",
+    href: "/mastery-roadmap#durchblick",
+  },
+  {
+    headline: "Versicherungsmakler \u00b7 15 MA \u00b7 Finanzen",
+    text: "\u201eDrei Leute tippen t\u00e4glich Kundendaten aus 80 E-Mails h\u00e4ndisch ins CRM. Das muss doch besser gehen.\u201c",
+    produkt: "KI-Process-Check",
+    href: "/mastery-roadmap#loesung",
+  },
+  {
+    headline: "Personalberatung \u00b7 20 MA \u00b7 Dienstleistung",
+    text: "\u201eWir k\u00f6nnten KI-gest\u00fctztes Kandidaten-Matching als neues Produkt anbieten \u2013 aber wie setze ich das um?\u201c",
+    produkt: "AI Concept Sprint",
+    href: "/mastery-roadmap#loesung",
+  },
+  {
+    headline: "Kreativagentur \u00b7 25 MA \u00b7 Agentur",
+    text: "\u201eJeder nutzt andere KI-Tools, andere Prompts. Kein Wissenstransfer \u2013 wir erfinden das Rad t\u00e4glich neu.\u201c",
+    produkt: "Scope & Discovery",
+    href: "/mastery-roadmap#roadmap",
+  },
+  {
+    headline: "Gro\u00dfhandel Sanit\u00e4r \u00b7 40 MA \u00b7 Handel",
+    text: "\u201eDie H\u00e4lfte traut sich nicht an KI ran, die andere H\u00e4lfte \u00fcbersch\u00e4tzt sich. Mir fehlt ein gemeinsames Level.\u201c",
+    produkt: "AI License",
+    href: "/ai-license",
+  },
+  {
+    headline: "K\u00fcchengeräte \u00b7 55 MA \u00b7 Produktion",
+    text: "\u201eJede Bohne ist anders \u2013 aber unsere Maschine behandelt alle gleich. Die Konkurrenz ist uns voraus.\u201c",
+    produkt: "AI Concept Sprint",
+    href: "/mastery-roadmap#loesung",
+  },
+  {
+    headline: "Logistik \u00b7 80 MA \u00b7 Transport",
+    text: "\u201e15 Prozesse, bei denen KI helfen k\u00f6nnte \u2013 aber womit fangen wir an, ohne uns zu verzetteln?\u201c",
+    produkt: "AI Roadmap",
+    href: "/mastery-roadmap#roadmap",
+  },
+  {
+    headline: "Maschinenbau \u00b7 300 MA \u00b7 Industrie",
+    text: "\u201eJeder Bereich macht sein KI-Ding, nichts ist koordiniert \u2013 und der Vorstand fragt, wo die Ergebnisse bleiben.\u201c",
+    produkt: "Strategic Gap Check",
+    href: "/mastery-roadmap#roadmap",
+  },
 ];
 
 /* Mastery Roadmap Stufen */
@@ -281,18 +335,19 @@ export default function HomePage() {
           ============================================ */}
       <section className="py-20 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-center mb-12">Vor welcher KI-Herausforderung steht dein Unternehmen?</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <h2 className="text-center mb-4">Vor welcher KI-Herausforderung steht dein Unternehmen?</h2>
+          <p className="text-center text-dark-gray mb-12 max-w-2xl mx-auto">10 typische Situationen aus echten Branchen und Betriebsgrößen – von 3 bis 300 Mitarbeitern.</p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
             {problems.map((p) => (
               <Link
-                key={p.text}
+                key={p.headline}
                 href={p.href}
-                className="group block bg-off-white border-l-4 border-bright-red okai-shape-md p-6 hover:translate-x-1 transition-transform"
+                className="group block bg-off-white border-l-4 border-bright-red okai-shape-md p-5 hover:translate-x-1 transition-transform"
               >
-                <p className="eyebrow !text-bright-red mb-2">{p.headline}</p>
-                <p className="text-dark-gray group-hover:text-black transition-colors">{p.text}</p>
-                <span className="inline-flex items-center gap-1 mt-3 text-sm font-semibold text-bright-red">
-                  Mehr erfahren <IconArrowRight size={14} />
+                <p className="text-[0.65rem] font-semibold tracking-wide uppercase text-bright-red mb-2">{p.headline}</p>
+                <p className="text-sm text-dark-gray group-hover:text-black transition-colors leading-snug">{p.text}</p>
+                <span className="inline-flex items-center gap-1 mt-3 text-xs font-semibold text-mid-gray">
+                  {p.produkt} <IconArrowRight size={12} />
                 </span>
               </Link>
             ))}
