@@ -14,6 +14,7 @@ import {
   IconPhone,
 } from "@/components/Icons";
 import { RadarChart } from "@/components/RadarChart";
+import { BookingCalendar } from "@/components/BookingCalendar";
 
 /* ============================================
    Daten-Arrays
@@ -622,9 +623,7 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 gap-12">
             <div>
               <p className="eyebrow mb-4">Termin buchen</p>
-              <div className="bg-off-white okai-shape-md p-8 min-h-[300px] flex items-center justify-center border border-sand-border">
-                <p className="text-mid-gray text-sm text-center">Kalender-Integration folgt.</p>
-              </div>
+              <BookingCalendar />
             </div>
             <div className="flex flex-col justify-center gap-6">
               <a href="tel:+491722928881" className="inline-flex items-center gap-3 text-lg font-medium hover:text-bright-red transition-colors">
