@@ -272,16 +272,7 @@ export default function HomePage() {
                   className="object-cover object-top w-full h-[450px] md:h-[560px] okai-shape-lg"
                   priority
                 />
-                {/* TÜV-Badge als Kreis */}
-                <div className="absolute -bottom-6 left-0 bg-white rounded-full w-24 h-24 md:w-28 md:h-28 shadow-xl flex items-center justify-center p-2">
-                  <Image
-                    src="/assets/tuev-testmark.jpg"
-                    alt="TÜV-zertifiziert"
-                    width={96}
-                    height={96}
-                    className="w-full h-full object-contain rounded-full"
-                  />
-                </div>
+                {/* TÜV-Badge wird als permanenter Störer rechts am Bildschirmrand angezeigt */}
               </div>
             </div>
           </div>
