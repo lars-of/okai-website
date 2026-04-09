@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import {
   IconArrowRight,
   IconCheck,
@@ -59,98 +60,120 @@ const ways = [
 
 export default function ReifegradCheckPage() {
   return (
-    <div className="py-12">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Breadcrumb */}
-        <nav className="text-sm text-mid-gray mb-8">
-          <Link href="/" className="hover:text-black">okai.de</Link>
-          <span className="mx-2">›</span>
-          <span>KI-Reifegrad-Check</span>
-        </nav>
+    <>
+      {/* Hero-Bereich: schwarzer Hintergrund, passend zur Hauptseite */}
+      <section className="bg-black text-white pt-24 pb-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Logo – 2.5x gross */}
+          <div className="mb-8">
+            <Image
+              src="/assets/okai-logo.png"
+              alt="OKAI"
+              width={250}
+              height={80}
+              className="h-20 w-auto invert brightness-200"
+            />
+          </div>
 
-        {/* Badge */}
-        <span className="inline-block bg-sky text-black text-xs font-semibold px-3 py-1 rounded-full mb-4">
-          Lead Magnet · Kostenlos
-        </span>
+          {/* Breadcrumb */}
+          <nav className="text-sm text-mid-gray mb-8">
+            <Link href="/" className="hover:text-white transition-colors">okai.de</Link>
+            <span className="mx-2">›</span>
+            <span className="text-sand-border">KI-Reifegrad-Check</span>
+          </nav>
 
-        <h1 className="mb-4">KI-Reifegrad-Check</h1>
-        <p className="text-xl text-dark-gray mb-4 max-w-2xl">
-          25 Fragen. 5 Minuten. Ein ehrliches Bild davon, wo dein Unternehmen bei KI wirklich steht.
-        </p>
-        <p className="text-sm text-mid-gray mb-8">
-          Kostenlos · Kein Login · Sofortergebnis · 7 Dimensionen
-        </p>
-        <Link
-          href="/reifegrad-check/test"
-          className="inline-flex items-center gap-2 bg-bright-red text-white font-semibold px-6 py-3 okai-shape-sm hover:opacity-90 transition-opacity mb-16"
-        >
-          Check jetzt starten <IconArrowRight size={16} />
-        </Link>
+          {/* Badge */}
+          <span className="inline-block bg-sky text-black text-xs font-semibold px-3 py-1 rounded-full mb-4">
+            Lead Magnet · Kostenlos
+          </span>
 
-        {/* Was der Check misst */}
-        <section className="mb-16">
-          <h2 className="mb-4">7 Dimensionen. Eine ehrliche Standortbestimmung.</h2>
-          <p className="text-dark-gray mb-8">
-            Der Check analysiert dein Unternehmen entlang von 7 Dimensionen. Keine Wissensfragen – sondern konkrete Fragen zu deiner echten Situation.
+          <h1 className="mb-4 text-white">KI-Reifegrad-Check</h1>
+          <p className="text-xl text-sand-border mb-4 max-w-2xl">
+            25 Fragen. 5 Minuten. Ein ehrliches Bild davon, wo dein Unternehmen bei KI wirklich steht.
           </p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {dimensions.map((d) => (
-              <div key={d.name} className="bg-off-white okai-shape-md p-4 text-center border border-sand-border">
-                <d.icon size={24} className="mx-auto mb-2 text-dark-gray" />
-                <p className="text-sm font-medium">{d.name}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Was du bekommst */}
-        <section className="mb-16">
-          <h2 className="mb-8">Was du bekommst</h2>
-          <div className="space-y-4">
-            {results.map((r) => (
-              <div key={r.title} className="flex gap-3">
-                <IconCheck size={20} className="text-bright-red shrink-0 mt-0.5" />
-                <div>
-                  <p className="font-semibold">{r.title}</p>
-                  <p className="text-sm text-dark-gray">{r.sub}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Die 3 Wege nach dem Check */}
-        <section className="mb-16">
-          <h2 className="mb-8">Was nach dem Check passiert – du entscheidest.</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            {ways.map((w) => (
-              <div key={w.title} className="bg-off-white okai-shape-md p-6 border border-sand-border">
-                <w.icon size={24} className="text-dark-gray mb-3" />
-                <h3 className="mb-2">{w.title}</h3>
-                <p className="text-sm text-dark-gray">{w.text}</p>
-              </div>
-            ))}
-          </div>
-          <p className="caption mt-4">
-            Das persönliche Briefing-Gespräch ist kein öffentliches Angebot – es wird nur nach abgeschlossenem Check und bei passendem Ergebnis angeboten.
+          <p className="text-sm text-mid-gray mb-8">
+            Kostenlos · Kein Login · Sofortergebnis · 7 Dimensionen
           </p>
-        </section>
-
-        {/* CTAs */}
-        <div className="flex flex-wrap gap-4">
-          <Link href="/reifegrad-check/ablauf" className="inline-flex items-center gap-2 text-sm font-semibold hover:text-bright-red transition-colors">
-            Wie der Check im Detail abläuft <IconArrowRight size={14} />
-          </Link>
-        </div>
-        <div className="mt-6">
           <Link
             href="/reifegrad-check/test"
             className="inline-flex items-center gap-2 bg-bright-red text-white font-semibold px-6 py-3 okai-shape-sm hover:opacity-90 transition-opacity"
           >
-            Check starten <IconArrowRight size={16} />
+            Check jetzt starten <IconArrowRight size={16} />
           </Link>
         </div>
-      </div>
-    </div>
+      </section>
+
+      {/* Inhalt */}
+      <section className="bg-black text-white py-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Was der Check misst */}
+          <div className="mb-16">
+            <p className="section-label !text-mint mb-3">Dimensionen</p>
+            <h2 className="mb-4 text-white">7 Dimensionen. Eine ehrliche Standortbestimmung.</h2>
+            <p className="text-sand-border mb-8">
+              Der Check analysiert dein Unternehmen entlang von 7 Dimensionen. Keine Wissensfragen – sondern konkrete Fragen zu deiner echten Situation.
+            </p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {dimensions.map((d) => (
+                <div key={d.name} className="bg-white/10 rounded-xl p-4 text-center border border-white/10">
+                  <d.icon size={24} className="mx-auto mb-2 text-mint" />
+                  <p className="text-sm font-medium text-sand-border">{d.name}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Was du bekommst */}
+          <div className="mb-16">
+            <p className="section-label !text-mint mb-3">Ergebnisse</p>
+            <h2 className="mb-8 text-white">Was du bekommst</h2>
+            <div className="space-y-4">
+              {results.map((r) => (
+                <div key={r.title} className="flex gap-3">
+                  <IconCheck size={20} className="text-bright-red shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-semibold text-white">{r.title}</p>
+                    <p className="text-sm text-sand-border">{r.sub}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Die 3 Wege nach dem Check */}
+          <div className="mb-16">
+            <p className="section-label !text-mint mb-3">Nach dem Check</p>
+            <h2 className="mb-8 text-white">Was nach dem Check passiert – du entscheidest.</h2>
+            <div className="grid md:grid-cols-3 gap-6">
+              {ways.map((w) => (
+                <div key={w.title} className="bg-white/10 rounded-xl p-6 border border-white/10">
+                  <w.icon size={24} className="text-mint mb-3" />
+                  <h3 className="mb-2 text-white">{w.title}</h3>
+                  <p className="text-sm text-sand-border">{w.text}</p>
+                </div>
+              ))}
+            </div>
+            <p className="caption mt-4 !text-mid-gray">
+              Das persönliche Briefing-Gespräch ist kein öffentliches Angebot – es wird nur nach abgeschlossenem Check und bei passendem Ergebnis angeboten.
+            </p>
+          </div>
+
+          {/* CTAs */}
+          <div className="flex flex-wrap gap-4">
+            <Link href="/reifegrad-check/ablauf" className="inline-flex items-center gap-2 text-sm font-semibold text-sand-border hover:text-white transition-colors">
+              Wie der Check im Detail abläuft <IconArrowRight size={14} />
+            </Link>
+          </div>
+          <div className="mt-6">
+            <Link
+              href="/reifegrad-check/test"
+              className="inline-flex items-center gap-2 bg-bright-red text-white font-semibold px-6 py-3 okai-shape-sm hover:opacity-90 transition-opacity"
+            >
+              Check starten <IconArrowRight size={16} />
+            </Link>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }

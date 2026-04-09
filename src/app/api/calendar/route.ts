@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import {
   ICAL_URL,
   BOOKABLE_DAYS,
+  TIME_SLOTS_BY_DAY,
   TIME_SLOTS,
   SLOT_DURATION_MINUTES,
   MIN_LEAD_TIME_HOURS,
@@ -13,6 +14,7 @@ import {
 
    GET /api/calendar
    Gibt ein Array von Tagen mit freien Slots zurück.
+   Nutzt wochentag-spezifische Slot-Zeiten.
    ============================================ */
 
 /* Hilfsfunktion: iCal-Datei abrufen und belegte Zeiten extrahieren */
@@ -39,7 +41,6 @@ async function fetchBusyTimes(): Promise<{ start: Date; end: Date }[]> {
 
       if (dtStartMatch) {
         const start = parseICalDate(dtStartMatch[1]);
-        /* Ganztägige Events (nur Datum, keine Uhrzeit) blockieren den ganzen Tag */
         const end = dtEndMatch
           ? parseICalDate(dtEndMatch[1])
           : new Date(start.getTime() + 24 * 60 * 60 * 1000);
@@ -62,14 +63,12 @@ function parseICalDate(dateStr: string): Date {
   const clean = dateStr.replace(/[^0-9TZ]/g, "");
 
   if (clean.length === 8) {
-    /* Nur Datum: ganztägiges Event */
     const year = parseInt(clean.slice(0, 4));
     const month = parseInt(clean.slice(4, 6)) - 1;
     const day = parseInt(clean.slice(6, 8));
     return new Date(year, month, day);
   }
 
-  /* Datum + Uhrzeit */
   const year = parseInt(clean.slice(0, 4));
   const month = parseInt(clean.slice(4, 6)) - 1;
   const day = parseInt(clean.slice(6, 8));
@@ -100,7 +99,6 @@ export async function GET() {
     now.getTime() + MIN_LEAD_TIME_HOURS * 60 * 60 * 1000
   );
 
-  /* Ergebnis: Array von Tagen mit ihren freien Slots */
   const availableDays: { date: string; label: string; slots: string[] }[] = [];
 
   for (let d = 0; d < MAX_FUTURE_DAYS; d++) {
@@ -108,15 +106,16 @@ export async function GET() {
     date.setDate(date.getDate() + d);
     date.setHours(0, 0, 0, 0);
 
-    /* Nur buchbare Wochentage (Mo-Fr) */
-    const dayOfWeek = date.getDay();
-    /* getDay(): 0=So, 1=Mo ... Unsere Config: 1=Mo, 5=Fr */
+    const dayOfWeek = date.getDay(); // 0=So, 1=Mo ... 6=Sa
     if (!BOOKABLE_DAYS.includes(dayOfWeek)) continue;
 
-    const dateStr = date.toISOString().slice(0, 10); // YYYY-MM-DD
+    const dateStr = date.toISOString().slice(0, 10);
     const freeSlots: string[] = [];
 
-    for (const timeStr of TIME_SLOTS) {
+    /* Wochentag-spezifische Slots nutzen, Fallback auf allgemeine Slots */
+    const slotsForDay = TIME_SLOTS_BY_DAY[dayOfWeek] ?? TIME_SLOTS;
+
+    for (const timeStr of slotsForDay) {
       const [hours, minutes] = timeStr.split(":").map(Number);
       const slotStart = new Date(date);
       slotStart.setHours(hours, minutes, 0, 0);
@@ -125,18 +124,14 @@ export async function GET() {
         slotStart.getTime() + SLOT_DURATION_MINUTES * 60 * 1000
       );
 
-      /* Slot muss nach der Mindest-Vorlaufzeit liegen */
       if (slotStart <= minBookingTime) continue;
-
-      /* Slot darf nicht mit belegten Zeiten kollidieren */
       if (isSlotBusy(slotStart, slotEnd, busyTimes)) continue;
 
       freeSlots.push(timeStr);
     }
 
     if (freeSlots.length > 0) {
-      /* Deutsches Datumsformat: "Mi, 10. April" */
-      const label = slotStart_toGermanLabel(date);
+      const label = formatGermanDate(date);
       availableDays.push({ date: dateStr, label, slots: freeSlots });
     }
   }
@@ -144,8 +139,8 @@ export async function GET() {
   return NextResponse.json(availableDays);
 }
 
-/* Deutsches Datumslabel */
-function slotStart_toGermanLabel(date: Date): string {
+/* Deutsches Datumslabel: "Mi, 10. April" */
+function formatGermanDate(date: Date): string {
   const days = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
   const months = [
     "Januar", "Februar", "März", "April", "Mai", "Juni",

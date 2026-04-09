@@ -9,17 +9,19 @@ const COLORS = {
   sky: "#AEC5EB",
   offWhite: "#FDFCF9",
   midGray: "#7A7872",
+  white: "#FFFFFF",
 };
 
-// Die 7 Achsen des KI-Reifegrads
-const CATEGORIES = [
-  "Strategie",
-  "Prozesse",
-  "Daten & Systeme",
-  "Werkzeuge & Tools",
-  "Wissen im Team",
-  "Kultur & Haltung",
-  "Regeln & Verantwortung",
+// Die 7 Achsen des KI-Reifegrads – mit Zeilenumbruch-Info
+// Jeder Eintrag: [Zeile1, Zeile2] oder [Zeile1] wenn einzeilig
+const CATEGORIES: [string, string?][] = [
+  ["Strategie"],
+  ["Prozesse"],
+  ["Daten &", "Systeme"],
+  ["Werkzeuge &", "Tools"],
+  ["Wissen", "im Team"],
+  ["Kultur &", "Haltung"],
+  ["Regeln &", "Verantwortung"],
 ];
 
 // Beispielwerte (niedrig bis mittel, 25-55%)
@@ -28,9 +30,9 @@ const SAMPLE_SCORES = [0.35, 0.28, 0.45, 0.3, 0.25, 0.52, 0.38];
 // Konfiguration
 const CENTER_X = 250;
 const CENTER_Y = 250;
-const MAX_RADIUS = 160;
+const MAX_RADIUS = 150;
 const GRID_LEVELS = [0.25, 0.5, 0.75, 1.0];
-const LABEL_OFFSET = 28;
+const LABEL_OFFSET = 38; // Mehr Platz für zweizeilige Labels
 
 interface RadarChartProps {
   className?: string;
@@ -43,7 +45,6 @@ interface RadarChartProps {
  * index = Achsenindex, value = Wert zwischen 0 und 1 (Anteil am Maximum)
  */
 function getPoint(index: number, value: number, total: number) {
-  // Start oben (bei -90 Grad), dann im Uhrzeigersinn
   const angle = (2 * Math.PI * index) / total - Math.PI / 2;
   return {
     x: CENTER_X + Math.cos(angle) * MAX_RADIUS * value,
@@ -125,27 +126,23 @@ export function RadarChart({ className, scores }: RadarChartProps) {
       <defs>
         <radialGradient id="dataGradient" cx="50%" cy="50%" r="50%">
           <stop offset="0%" stopColor={COLORS.brightRed} stopOpacity="0.45" />
-          <stop
-            offset="100%"
-            stopColor={COLORS.brightRed}
-            stopOpacity="0.12"
-          />
+          <stop offset="100%" stopColor={COLORS.brightRed} stopOpacity="0.12" />
         </radialGradient>
       </defs>
 
-      {/* Konzentrische Heptagon-Gitterlinien (4 Stufen) */}
+      {/* Konzentrische Heptagon-Gitterlinien – WEISS und DICKER */}
       {GRID_LEVELS.map((level) => (
         <polygon
           key={`grid-${level}`}
           points={getGridPolygonPoints(level, total)}
           fill="none"
-          stroke={COLORS.offWhite}
-          strokeOpacity={level === 1.0 ? 0.2 : 0.08}
-          strokeWidth={level === 1.0 ? 1 : 0.5}
+          stroke={COLORS.white}
+          strokeOpacity={level === 1.0 ? 0.35 : 0.15}
+          strokeWidth={level === 1.0 ? 1.5 : 1}
         />
       ))}
 
-      {/* Achsenlinien vom Zentrum zu den Ecken */}
+      {/* Achsenlinien vom Zentrum zu den Ecken – WEISS und DICKER */}
       {CATEGORIES.map((_, i) => {
         const { x, y } = getPoint(i, 1, total);
         return (
@@ -155,9 +152,9 @@ export function RadarChart({ className, scores }: RadarChartProps) {
             y1={CENTER_Y}
             x2={x}
             y2={y}
-            stroke={COLORS.offWhite}
-            strokeOpacity={0.1}
-            strokeWidth={0.5}
+            stroke={COLORS.white}
+            strokeOpacity={0.2}
+            strokeWidth={1}
           />
         );
       })}
@@ -167,7 +164,7 @@ export function RadarChart({ className, scores }: RadarChartProps) {
         points={getPolygonPoints(activeScores, total)}
         fill="url(#dataGradient)"
         stroke={COLORS.brightRed}
-        strokeWidth={2}
+        strokeWidth={2.5}
         strokeOpacity={0.85}
         strokeLinejoin="round"
       />
@@ -178,30 +175,55 @@ export function RadarChart({ className, scores }: RadarChartProps) {
           key={`dot-${i}`}
           cx={point.x}
           cy={point.y}
-          r={4}
+          r={5}
           fill={COLORS.brightRed}
-          stroke={COLORS.offWhite}
-          strokeWidth={1.5}
-          strokeOpacity={0.6}
+          stroke={COLORS.white}
+          strokeWidth={2}
+          strokeOpacity={0.8}
         />
       ))}
 
-      {/* Achsenbeschriftungen */}
-      {CATEGORIES.map((label, i) => {
+      {/* Achsenbeschriftungen – ZWEIZEILIG wo nötig */}
+      {CATEGORIES.map((labelParts, i) => {
         const pos = getLabelPosition(i, total);
+        const anchor = getTextAnchor(i, total);
+        const baseline = getDominantBaseline(i, total);
+        const [line1, line2] = labelParts;
+
+        if (line2) {
+          // Zweizeilig: y-Offset für vertikale Zentrierung
+          const yOffset = baseline === "hanging" ? 0 : baseline === "auto" ? -8 : -5;
+          return (
+            <text
+              key={`label-${i}`}
+              x={pos.x}
+              y={pos.y + yOffset}
+              textAnchor={anchor}
+              dominantBaseline={baseline}
+              fill={COLORS.white}
+              fontSize="13"
+              fontFamily="system-ui, -apple-system, sans-serif"
+              fontWeight="500"
+            >
+              <tspan x={pos.x} dy="0">{line1}</tspan>
+              <tspan x={pos.x} dy="15">{line2}</tspan>
+            </text>
+          );
+        }
+
         return (
           <text
             key={`label-${i}`}
             x={pos.x}
             y={pos.y}
-            textAnchor={getTextAnchor(i, total)}
-            dominantBaseline={getDominantBaseline(i, total)}
-            fill={COLORS.mint}
+            textAnchor={anchor}
+            dominantBaseline={baseline}
+            fill={COLORS.white}
             fontSize="13"
             fontFamily="system-ui, -apple-system, sans-serif"
             fontWeight="500"
           >
-            {label}
+            {line1}
           </text>
         );
       })}

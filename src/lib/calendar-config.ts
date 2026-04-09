@@ -20,19 +20,18 @@ export const ICAL_URL =
 /* Buchbare Wochentage: 1=Mo, 2=Di, 3=Mi, 4=Do, 5=Fr */
 export const BOOKABLE_DAYS = [1, 2, 3, 4, 5];
 
-/* Buchbare Zeitfenster (Mittagspause 12-13 Uhr ausgespart) */
-export const TIME_SLOTS = [
-  "09:00", "09:30",
-  "10:00", "10:30",
-  "11:00", "11:30",
-  // 12:00-13:00 = Mittagspause
-  "13:00", "13:30",
-  "14:00", "14:30",
-  "15:00", "15:30",
-  "16:00", "16:30",
-  "17:00", "17:30",
-  "18:00", "18:30",
-];
+/* Buchbare Zeitfenster – 3 feste Termine pro Tag
+   Unterschiedliche Kombinationen pro Wochentag für Abwechslung */
+export const TIME_SLOTS_BY_DAY: Record<number, string[]> = {
+  1: ["09:15", "13:00", "16:30"],  // Montag: alle drei
+  2: ["09:15", "16:30"],            // Dienstag: morgens + nachmittags
+  3: ["13:00", "16:30"],            // Mittwoch: mittags + nachmittags
+  4: ["09:15", "13:00"],            // Donnerstag: morgens + mittags
+  5: ["09:15", "13:00", "16:30"],  // Freitag: alle drei
+};
+
+/* Fallback für die API-Route (alle möglichen Slots) */
+export const TIME_SLOTS = ["09:15", "13:00", "16:30"];
 
 /* Dauer eines Termins in Minuten */
 export const SLOT_DURATION_MINUTES = 30;

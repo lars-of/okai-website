@@ -32,9 +32,9 @@ export function Navigation() {
             <Image
               src="/assets/okai-logo.png"
               alt="OKAI"
-              width={100}
-              height={32}
-              className="h-8 w-auto invert brightness-200"
+              width={250}
+              height={80}
+              className="h-20 w-auto invert brightness-200"
               priority
             />
           </Link>
@@ -49,9 +49,6 @@ export function Navigation() {
             </Link>
             <Link href="/werte" className="text-sm font-medium text-sand-border hover:text-white transition-colors">
               Werte
-            </Link>
-            <Link href="/ueber-lars" className="text-sm font-medium text-sand-border hover:text-white transition-colors">
-              Über Lars
             </Link>
             <Link
               href="/reifegrad-check"
@@ -84,9 +81,6 @@ export function Navigation() {
           </Link>
           <Link href="/werte" className="block text-sm font-medium text-sand-border py-2" onClick={() => setMobileOpen(false)}>
             Werte
-          </Link>
-          <Link href="/ueber-lars" className="block text-sm font-medium text-sand-border py-2" onClick={() => setMobileOpen(false)}>
-            Über Lars
           </Link>
           <Link
             href="/reifegrad-check"

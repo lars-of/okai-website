@@ -358,6 +358,86 @@ export function IconLightbulb({ size = 24, className }: IconProps) {
   );
 }
 
+/* Website/Globe Icon */
+export function IconGlobe({ size = 24, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <circle cx="12" cy="12" r="10" />
+      <line x1="2" y1="12" x2="22" y2="12" />
+      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+    </svg>
+  );
+}
+
+/* Doktorhut / Graduation Cap */
+export function IconGraduation({ size = 24, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <polygon points="12 2 2 7 12 12 22 7 12 2" />
+      <path d="M6 9.5v6c0 1.66 2.69 3 6 3s6-1.34 6-3v-6" />
+      <line x1="22" y1="7" x2="22" y2="13" />
+    </svg>
+  );
+}
+
+/* Buch-Icon */
+export function IconBook({ size = 24, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+    </svg>
+  );
+}
+
+/* TÜV-Dreieck (ähnlich TÜV-Logo) */
+export function IconTuevTriangle({ size = 24, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <polygon points="12 3 2 21 22 21 12 3" />
+      <circle cx="12" cy="15" r="2.5" />
+    </svg>
+  );
+}
+
+/* KI-Text-Icon (stilisiertes "KI") */
+export function IconKI({ size = 24, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" className={className}>
+      <text x="2" y="19" fontFamily="system-ui, sans-serif" fontWeight="800" fontSize="16" fill="currentColor" letterSpacing="-1">KI</text>
+    </svg>
+  );
+}
+
+/* Effie E (geneigt) */
+export function IconEffieE({ size = 24, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" className={className}>
+      <g transform="rotate(8, 12, 12)">
+        <text x="5" y="20" fontFamily="system-ui, sans-serif" fontWeight="800" fontSize="22" fill="currentColor">E</text>
+      </g>
+    </svg>
+  );
+}
+
+/* Chevron Left */
+export function IconChevronLeft({ size = 24, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <polyline points="15 18 9 12 15 6" />
+    </svg>
+  );
+}
+
+/* Chevron Right */
+export function IconChevronRight({ size = 24, className }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <polyline points="9 6 15 12 9 18" />
+    </svg>
+  );
+}
+
 /* Fragezeichen-Explosion */
 export function IconQuestionBurst({ size = 24, className }: IconProps) {
   return (

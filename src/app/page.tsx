@@ -6,12 +6,16 @@ import {
   IconCompass,
   IconLightning,
   IconLayers,
-  IconShield,
   IconChart,
-  IconUser,
   IconMail,
   IconLinkedIn,
   IconPhone,
+  IconGlobe,
+  IconTuevTriangle,
+  IconKI,
+  IconGraduation,
+  IconEffieE,
+  IconBook,
 } from "@/components/Icons";
 import { RadarChart } from "@/components/RadarChart";
 import { BookingCalendar } from "@/components/BookingCalendar";
@@ -20,7 +24,7 @@ import { BookingCalendar } from "@/components/BookingCalendar";
    Daten-Arrays
    ============================================ */
 
-/* Kunden-Logos (Trust-Carousel) – ohne Fonio, ohne ISK */
+/* Kunden-Logos (Trust-Carousel) */
 const kundenLogos = [
   { src: "/assets/etv-logo.png", alt: "ETV Hamburg" },
   { src: "/assets/radblitz-logo.png", alt: "Radblitz" },
@@ -35,107 +39,95 @@ const partnerLogos = [
   { src: "/assets/fonio-logo.png", alt: "Fonio", href: "https://fonio.ai" },
 ];
 
-/* Zertifikate & Qualifikationen – für den Bereich Über Lars */
+/* Zertifikate & Qualifikationen – Redesign mit Icons */
 const zertifikate = [
   {
-    logo: "/assets/tuev-testmark.jpg",
+    icon: "tuev",
     title: "TÜV-zertifiziert",
     sub: "Manager KI-Transformation",
     href: "/assets/CR_Lars Fieck.pdf",
   },
   {
-    logo: "/assets/Koerting_Institute.png",
-    title: "Koerting Institut",
-    sub: "KI Masterclass · 18 Monate",
-    href: "https://koerting-institute.com/angebot/ki-masterclass/",
+    icon: "ki",
+    title: "KI Masterclass",
+    sub: "Koerting Institut · 18 Monate",
+    expandable: true,
+    certificates: [
+      { name: "KI Masterclass Zertifikat", href: "/assets/KI Masterclass Zertifikat Lars Fieck.png" },
+      { name: "KI Masterclass Zertifikat 2", href: "/assets/KI Masterclass Zertifikat 2 Lars Fieck.png" },
+    ],
   },
   {
-    logo: "/assets/innolea-logo.png",
-    title: "Innolea Institut",
-    sub: "Mentor",
-    href: "https://innolea-institut.com/mentorinnen/",
-  },
-  {
-    logo: "/assets/OAI0425_Logo_RZ.jpg",
+    icon: "graduation",
     title: "LETUJA",
     sub: "Certified AI Consultant",
     href: "/assets/Zertifikat AI Consultant Lars Fieck.pdf",
   },
   {
-    title: "5\u00d7 Effie Award",
+    icon: "effie",
+    title: "5× Effie Award",
     sub: "Gewinner",
-    href: "#effie-awards",
-    isEffie: true,
+    expandable: true,
+    awards: [
+      { name: "Jägermeister", href: "https://puk.agency/cases/im-eichenfass-zum-meister-gereift/" },
+      { name: "PayOne", href: "https://www.youtube.com/watch?v=eXVwpbRE9QU" },
+      { name: "Leica PaperSkin", href: "https://www.youtube.com/watch?v=Ip0smfIDQW4" },
+    ],
+  },
+  {
+    icon: "book",
+    title: "Co-Autor",
+    sub: "Fachbücher zu Marke & KI",
+    expandable: true,
+    books: [
+      { name: "Brand Innovation", img: "/assets/buch-brand-innovation.jpg" },
+      { name: "KI, Mensch, Wandel", img: "/assets/buch-ki-mensch-wandel.jpg" },
+    ],
   },
 ];
 
-/* Effie Award Cases */
-const effieAwards = [
-  { name: "J\u00e4germeister", href: "https://puk.agency/cases/im-eichenfass-zum-meister-gereift/" },
-  { name: "PayOne", href: "https://www.youtube.com/watch?v=eXVwpbRE9QU" },
-  { name: "Leica PaperSkin for Fedrigoni", href: "https://www.youtube.com/watch?v=Ip0smfIDQW4" },
-];
-
-/* Problemkarten – 10 echte Herausforderungen nach Branche & Größe */
+/* Problemkarten – 6 echte Herausforderungen nach Branche & Größe */
 const problems = [
   {
-    headline: "Schreinerei \u00b7 3 MA \u00b7 Handwerk",
-    text: "\u201eDas Telefon klingelt st\u00e4ndig \u2013 aber ich steh an der S\u00e4ge. Kunden erreichen mich nicht, Auftr\u00e4ge gehen verloren.\u201c",
-    produkt: "Instant Telefon-Bot",
-    href: "/mastery-roadmap#autopilot",
-  },
-  {
-    headline: "Elektrobetrieb \u00b7 8 MA \u00b7 Handwerk",
+    type: "Elektrobetrieb · 8 MA",
+    branche: "Handwerk",
     text: "\u201e\u00dcberall hei\u00dft es \u201aKI ver\u00e4ndert alles\u2018 \u2013 aber was soll ich als kleiner Betrieb damit anfangen?\u201c",
     produkt: "KI-Reifegrad-Check",
     href: "/reifegrad-check",
   },
   {
-    headline: "Steuerkanzlei \u00b7 12 MA \u00b7 Dienstleistung",
+    type: "Steuerkanzlei · 12 MA",
+    branche: "Dienstleistung",
     text: "\u201eWir nutzen Tools mit KI \u2013 aber ich habe keine Ahnung, ob wir seit dem EU AI Act compliant sind.\u201c",
     produkt: "EU-AI Schulung",
     href: "/mastery-roadmap#durchblick",
   },
   {
-    headline: "Versicherungsmakler \u00b7 15 MA \u00b7 Finanzen",
+    type: "Versicherungsmakler · 15 MA",
+    branche: "Finanzen",
     text: "\u201eDrei Leute tippen t\u00e4glich Kundendaten aus 80 E-Mails h\u00e4ndisch ins CRM. Das muss doch besser gehen.\u201c",
     produkt: "KI-Process-Check",
     href: "/mastery-roadmap#loesung",
   },
   {
-    headline: "Personalberatung \u00b7 20 MA \u00b7 Dienstleistung",
-    text: "\u201eWir k\u00f6nnten KI-gest\u00fctztes Kandidaten-Matching als neues Produkt anbieten \u2013 aber wie setze ich das um?\u201c",
-    produkt: "AI Concept Sprint",
-    href: "/mastery-roadmap#loesung",
-  },
-  {
-    headline: "Kreativagentur \u00b7 25 MA \u00b7 Agentur",
+    type: "Kreativagentur · 25 MA",
+    branche: "Agentur",
     text: "\u201eJeder nutzt andere KI-Tools, andere Prompts. Kein Wissenstransfer \u2013 wir erfinden das Rad t\u00e4glich neu.\u201c",
     produkt: "Scope & Discovery",
     href: "/mastery-roadmap#roadmap",
   },
   {
-    headline: "Gro\u00dfhandel Sanit\u00e4r \u00b7 40 MA \u00b7 Handel",
-    text: "\u201eDie H\u00e4lfte traut sich nicht an KI ran, die andere H\u00e4lfte \u00fcbersch\u00e4tzt sich. Mir fehlt ein gemeinsames Level.\u201c",
-    produkt: "AI License",
-    href: "/ai-license",
-  },
-  {
-    headline: "K\u00fcchengeräte \u00b7 55 MA \u00b7 Produktion",
+    type: "K\u00fcchengeräte · 55 MA",
+    branche: "Produktion",
     text: "\u201eJede Bohne ist anders \u2013 aber unsere Maschine behandelt alle gleich. Die Konkurrenz ist uns voraus.\u201c",
     produkt: "AI Concept Sprint",
     href: "/mastery-roadmap#loesung",
   },
   {
-    headline: "Logistik \u00b7 80 MA \u00b7 Transport",
+    type: "Logistik · 80 MA",
+    branche: "Transport",
     text: "\u201e15 Prozesse, bei denen KI helfen k\u00f6nnte \u2013 aber womit fangen wir an, ohne uns zu verzetteln?\u201c",
     produkt: "AI Roadmap",
-    href: "/mastery-roadmap#roadmap",
-  },
-  {
-    headline: "Maschinenbau \u00b7 300 MA \u00b7 Industrie",
-    text: "\u201eJeder Bereich macht sein KI-Ding, nichts ist koordiniert \u2013 und der Vorstand fragt, wo die Ergebnisse bleiben.\u201c",
-    produkt: "Strategic Gap Check",
     href: "/mastery-roadmap#roadmap",
   },
 ];
@@ -145,7 +137,7 @@ const roadmapStages = [
   {
     stage: "Einstieg",
     title: "Lead Magnete",
-    description: "Finde heraus wo du stehst \u2013 bevor du einen Euro ausgibst.",
+    description: "Schnell herausfinden wo du stehst – ohne Aufwand, ohne Risiko.",
     tags: ["KI-Reifegrad-Check", "KI-Mythen-Serie"],
     color: "bg-sky",
     href: "/reifegrad-check",
@@ -185,7 +177,7 @@ const roadmapStages = [
   },
 ];
 
-/* Arbeitsweise – ohne "Integer" */
+/* Arbeitsweise */
 const principles = [
   { icon: IconCompass, title: "Smart", text: "KI gezielt einsetzen, nicht blind. Wir wissen wann Automatisierung hilft und wann menschliche Kompetenz unersetzlich bleibt." },
   { icon: IconLightning, title: "Energetisch", text: "Begeisterung f\u00fcr Fortschritt. Wer mit uns arbeitet sp\u00fcrt: Hier geht es um motiviertes Arbeiten mit echtem Impact." },
@@ -203,6 +195,11 @@ const cases = [
     loesung: "KI-Workflow auf Basis vorhandener Daten: Spielbogen, Statistiken, Spielerinnen-O-T\u00f6ne. Die KI transkribiert, recherchiert und schreibt nach einer gemeinsam entwickelten Richtlinie.",
     ergebnis: "28 Pressemeldungen in einer Saison. Der Tabellenf\u00fchrer kommt auf acht. Durchgehende, professionelle Pressearbeit auf der Verbandsplattform, eigenen Kan\u00e4len und in der regionalen Presse.",
     linkedin: "https://www.linkedin.com/company/etv-hamburg-wasserball",
+    website: "https://www.wasserball-bundesliga.de/team/etv-hamburg",
+    websiteLabel: "Wasserball-Bundesliga",
+    screenshot: "/assets/etv_wasserball_buli.png",
+    screenshotAlt: "Pressemitteilungsseite ETV Hamburg auf wasserball-bundesliga.de",
+    screenshotCredit: "Felix Schlikis \u2013 Der Sportfotograf",
   },
   {
     logo: "/assets/innolea-logo.png",
@@ -212,6 +209,8 @@ const cases = [
     problem: "Innolea ist ein digitales Boutique-Institut, das sich durch 20 Stunden pers\u00f6nliche Mentorenbetreuung von gro\u00dfen Anbietern unterscheidet. Der alte Telefonauftritt klang wie alle anderen.",
     loesung: "Intensive Markenarbeit vor dem ersten Skript: Welcher Charakter ist Innolea? Wie klingt ein Mentor? Erst aus dieser Arbeit entstand die Stimme des Bots.",
     ergebnis: "Wer bei Innolea anruft, bekommt vom ersten Moment an ein Gef\u00fchl f\u00fcr das Institut. Nicht durch einen Flyer \u2013 durch ein Gespr\u00e4ch, das das Versprechen der Marke h\u00e4lt.",
+    website: "https://www.innolea-institut.com",
+    websiteLabel: "innolea-institut.com",
   },
   {
     logo: "/assets/urgh-logo.png",
@@ -221,8 +220,24 @@ const cases = [
     problem: "Urgh ist ein Elektrolyte Booster \u2013 und eine v\u00f6llig verr\u00fcckte Marke. Die Frage war nicht wie man den Bot n\u00fctzlich macht, sondern wie man ihn unvergesslich macht.",
     loesung: "Wer anruft, landet in einer Unterhaltung mit dem Monster. Es fragt \u00fcber Kater, l\u00e4dt zu einem Battle ein, vergibt Punkte \u2013 wer genug sammelt, gewinnt 25% Rabatt.",
     ergebnis: "Markenerlebnis, das kein TV-Spot schafft. Gleichzeitig handfeste Marktforschung: Daten dar\u00fcber, wie Menschen wirklich \u00fcber Kater sprechen.",
+    website: "https://www.urgh-shot.de/",
+    websiteLabel: "urgh-shot.de",
+    screenshot: "/assets/URGH_Shot.png",
+    screenshotAlt: "URGH Shot Website",
   },
 ];
+
+/* Zertifikat-Icon-Auswahl */
+function ZertifikatIcon({ type, size = 32 }: { type: string; size?: number }) {
+  switch (type) {
+    case "tuev": return <IconTuevTriangle size={size} className="text-bright-red" />;
+    case "ki": return <IconKI size={size} className="text-bright-red" />;
+    case "graduation": return <IconGraduation size={size} className="text-bright-red" />;
+    case "effie": return <IconEffieE size={size} className="text-bright-red" />;
+    case "book": return <IconBook size={size} className="text-bright-red" />;
+    default: return <IconChart size={size} className="text-bright-red" />;
+  }
+}
 
 export default function HomePage() {
   return (
@@ -235,7 +250,7 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
             {/* Links: Text */}
             <div>
-              <p className="eyebrow mb-5 !text-sand-border">KI-Beratung für KMU · Hamburg</p>
+              <p className="section-label mb-5 !text-sand-border">KI-Beratung für KMU · Hamburg</p>
               <h1 className="mb-6 text-white">
                 KI made simple –<br />
                 für KMU die wirklich<br />
@@ -260,10 +275,9 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Rechts: Portrait – kreativ im Anschnitt, ohne Kasten */}
+            {/* Rechts: Portrait */}
             <div className="relative flex justify-end">
               <div className="relative w-full max-w-md">
-                {/* Foto ragt über den Rand hinaus, kein Kasten */}
                 <Image
                   src="/assets/lars-hero.png"
                   alt="Lars Fiëck – Strategy Director & AI Consultant"
@@ -272,7 +286,6 @@ export default function HomePage() {
                   className="object-cover object-top w-full h-[450px] md:h-[560px] okai-shape-lg"
                   priority
                 />
-                {/* TÜV-Badge wird als permanenter Störer rechts am Bildschirmrand angezeigt */}
               </div>
             </div>
           </div>
@@ -282,8 +295,8 @@ export default function HomePage() {
       {/* ============================================
           S2: KUNDEN – Weißer Hintergrund
           ============================================ */}
-      <section className="py-12 bg-white overflow-hidden">
-        <p className="text-lg font-semibold text-center mb-8 text-dark-gray">Kunden</p>
+      <section className="py-12 bg-white overflow-hidden okai-watermark okai-watermark-right">
+        <p className="section-label text-center mb-8">Kunden</p>
         <div className="trust-carousel">
           <div className="trust-carousel-track">
             {[...kundenLogos, ...kundenLogos, ...kundenLogos].map((logo, i) => (
@@ -305,7 +318,7 @@ export default function HomePage() {
           ============================================ */}
       <section className="py-14 bg-sand">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="eyebrow text-center mb-8">OKAI Partner</p>
+          <p className="section-label text-center mb-8">OKAI Partner</p>
           <div className="flex flex-wrap justify-center gap-10 md:gap-16 items-center">
             {partnerLogos.map((p) => (
               <a key={p.alt} href={p.href} target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
@@ -325,18 +338,22 @@ export default function HomePage() {
       {/* ============================================
           S4: HERAUSFORDERUNGEN – Weißer Hintergrund
           ============================================ */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white okai-watermark okai-watermark-left">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="section-label">Herausforderungen</p>
           <h2 className="text-center mb-4">Vor welcher KI-Herausforderung steht dein Unternehmen?</h2>
-          <p className="text-center text-dark-gray mb-12 max-w-2xl mx-auto">10 typische Situationen aus echten Branchen und Betriebsgrößen – von 3 bis 300 Mitarbeitern.</p>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+          <p className="text-center text-dark-gray mb-12 max-w-2xl mx-auto">6 typische Situationen aus echten Branchen und Betriebsgrößen.</p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
             {problems.map((p) => (
               <Link
-                key={p.headline}
+                key={p.type}
                 href={p.href}
-                className="group block bg-off-white border-l-4 border-bright-red okai-shape-md p-5 hover:translate-x-1 transition-transform"
+                className="group block bg-off-white border-l-4 border-bright-red rounded-xl p-5 hover:translate-x-1 transition-transform overflow-hidden"
               >
-                <p className="text-[0.65rem] font-semibold tracking-wide uppercase text-bright-red mb-2">{p.headline}</p>
+                {/* Zeile 1: Unternehmensart + MA */}
+                <p className="text-base font-bold text-bright-red mb-0.5">{p.type}</p>
+                {/* Zeile 2: Wirtschaftszweig */}
+                <p className="text-xs font-semibold tracking-wide uppercase text-mid-gray mb-3">{p.branche}</p>
                 <p className="text-sm text-dark-gray group-hover:text-black transition-colors leading-snug">{p.text}</p>
                 <span className="inline-flex items-center gap-1 mt-3 text-xs font-semibold text-mid-gray">
                   {p.produkt} <IconArrowRight size={12} />
@@ -350,12 +367,12 @@ export default function HomePage() {
       {/* ============================================
           S5: REIFEGRAD-CHECK – Schwarz mit Akzentfarben
           ============================================ */}
-      <section className="py-20 bg-black text-white">
+      <section className="py-20 bg-black text-white okai-watermark okai-watermark-right">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <p className="eyebrow !text-mint mb-3">KI-Reifegrad-Check</p>
-              <h2 className="mb-6 text-white">Finde heraus wo du stehst – bevor du einen Euro ausgibst.</h2>
+              <p className="section-label !text-mint mb-3">KI-Reifegrad-Check</p>
+              <h2 className="mb-6 text-white">Schnell, unkompliziert und mit klarem Ergebnis – dein erster Schritt in Richtung KI.</h2>
               <p className="text-sand-border mb-6">
                 25 Fragen. 5 Minuten. Ein ehrliches Bild davon, wo dein Unternehmen bei KI wirklich steht – mit konkreter Einschätzung, was als nächstes sinnvoll ist.
               </p>
@@ -387,9 +404,9 @@ export default function HomePage() {
       {/* ============================================
           S6: MASTERY ROADMAP – Sand
           ============================================ */}
-      <section id="mastery-roadmap" className="py-20 bg-sand">
+      <section id="mastery-roadmap" className="py-20 bg-sand okai-watermark okai-watermark-left">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="eyebrow mb-3">OKAI Mastery Roadmap</p>
+          <p className="section-label mb-3">OKAI Mastery Roadmap</p>
           <h2 className="mb-4">Erst verstehen. Dann planen. Dann umsetzen. Dann loslassen.</h2>
           <p className="text-dark-gray mb-12 max-w-2xl">
             Jede Stufe ist eigenständig buchbar – alle bauen aufeinander auf. Steig ein, wo du stehst. Nicht wo du sein solltest.
@@ -399,18 +416,18 @@ export default function HomePage() {
               <Link
                 key={s.title}
                 href={s.href}
-                className={`shrink-0 w-64 okai-shape-md p-6 border border-sand-border hover:shadow-lg transition-shadow snap-start ${
+                className={`shrink-0 w-64 rounded-xl p-6 border border-sand-border hover:shadow-lg transition-shadow snap-start ${
                   s.color === "bg-black" ? "bg-black text-off-white" : "bg-white"
                 }`}
               >
-                <span className={`inline-block px-2.5 py-1 okai-shape-sm text-xs font-semibold mb-3 ${s.color} ${s.textColor || "text-black"}`}>
+                <span className={`inline-block px-2.5 py-1 rounded-lg text-xs font-semibold mb-3 ${s.color} ${s.textColor || "text-black"}`}>
                   {s.stage}
                 </span>
                 <h3 className={`mb-2 ${s.color === "bg-black" ? "text-off-white" : ""}`}>{s.title}</h3>
                 <p className={`text-sm mb-4 ${s.color === "bg-black" ? "text-sand-border" : "text-dark-gray"}`}>{s.description}</p>
                 <div className="flex flex-wrap gap-1.5">
                   {s.tags.map((tag) => (
-                    <span key={tag} className={`text-xs px-2 py-0.5 okai-shape-sm ${
+                    <span key={tag} className={`text-xs px-2 py-0.5 rounded-lg ${
                       s.color === "bg-black" ? "bg-dark-gray text-sand-border" : "bg-sand text-dark-gray"
                     }`}>
                       {tag}
@@ -428,10 +445,11 @@ export default function HomePage() {
           ============================================ */}
       <section className="py-20 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="section-label mb-3">Arbeitsweise</p>
           <h2 className="mb-12">Wie wir arbeiten.</h2>
           <div className="grid md:grid-cols-3 gap-6">
             {principles.map((p) => (
-              <div key={p.title} className="bg-off-white okai-shape-md p-6">
+              <div key={p.title} className="bg-off-white rounded-xl p-6">
                 <div className="flex items-center gap-3 mb-3">
                   <p.icon size={24} className="text-bright-red shrink-0" />
                   <h3>{p.title}</h3>
@@ -450,7 +468,7 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <p className="eyebrow !text-white/70 mb-3">KI-Policy</p>
+              <p className="section-label !text-white/70 mb-3">KI-Policy</p>
               <h2 className="text-white mb-6">Struktur statt Chaos. Ein Manifest statt einer 80-Seiten-Richtlinie.</h2>
               <p className="text-white/85 mb-6">
                 KI einzuführen funktioniert nicht mit einem dicken Regelwerk, das niemand liest. Es braucht ein klares, kurzes Manifest – verständlich für alle, umsetzbar ab Tag eins. Nicht perfekt, aber wirksam. Nicht kompliziert, aber verbindlich.
@@ -466,7 +484,7 @@ export default function HomePage() {
               </Link>
             </div>
             <div className="flex items-center justify-center">
-              <div className="bg-white/15 backdrop-blur-sm okai-shape-lg p-8 md:p-10 max-w-sm">
+              <div className="bg-white/15 backdrop-blur-sm rounded-xl p-8 md:p-10 max-w-sm">
                 <p className="text-2xl font-bold mb-4">OKAI KI-Manifest</p>
                 <ul className="space-y-3 text-white/90">
                   <li className="flex items-start gap-2"><IconCheck size={18} className="text-white shrink-0 mt-0.5" /> Mensch vor Maschine</li>
@@ -482,41 +500,83 @@ export default function HomePage() {
       </section>
 
       {/* ============================================
-          S9: CASES – Sand
+          S9: CASES – Sand (Erfolgsgeschichten)
           ============================================ */}
-      <section className="py-20 bg-sand">
+      <section className="py-20 bg-sand okai-watermark okai-watermark-right">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="section-label mb-3">Erfolgsgeschichten</p>
           <h2 className="mb-12">Was dabei rauskommt.</h2>
           <div className="space-y-8">
             {cases.map((c) => (
-              <div key={c.name} className="bg-white okai-shape-md p-8 border border-sand-border">
-                <div className="flex items-center gap-4 mb-6">
+              <div key={c.name} className="bg-white rounded-xl p-8 border border-sand-border">
+                {/* Header: Logo + Name + Icons */}
+                <div className="flex items-center gap-4 mb-6 flex-wrap">
                   <Image src={c.logo} alt={c.name} width={48} height={48} className="h-12 w-auto object-contain" />
                   <div>
                     <h3>{c.name}</h3>
                     <p className="caption">{c.branche}</p>
                   </div>
-                  {c.linkedin && (
-                    <a href={c.linkedin} target="_blank" rel="noopener noreferrer" className="ml-auto text-mid-gray hover:text-bright-red transition-colors">
-                      <IconLinkedIn size={20} />
-                    </a>
-                  )}
+                  <div className="ml-auto flex items-center gap-3">
+                    {c.website && (
+                      <a
+                        href={c.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex flex-col items-center text-mid-gray hover:text-bright-red transition-colors"
+                        title={c.websiteLabel}
+                      >
+                        <IconGlobe size={20} />
+                        <span className="text-[0.55rem] mt-0.5">{c.websiteLabel}</span>
+                      </a>
+                    )}
+                    {c.linkedin && (
+                      <a
+                        href={c.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex flex-col items-center text-mid-gray hover:text-bright-red transition-colors"
+                        title="LinkedIn"
+                      >
+                        <IconLinkedIn size={20} />
+                        <span className="text-[0.55rem] mt-0.5">LinkedIn</span>
+                      </a>
+                    )}
+                  </div>
                 </div>
+
                 <p className="text-xl font-semibold mb-4">{c.headline}</p>
-                <div className="grid md:grid-cols-3 gap-6">
+
+                {/* Problem / Lösung / Ergebnis */}
+                <div className="grid md:grid-cols-3 gap-6 mb-6">
                   <div>
-                    <p className="eyebrow mb-2">Problem</p>
+                    <p className="section-label mb-2 !text-xs">Problem</p>
                     <p className="text-sm text-dark-gray">{c.problem}</p>
                   </div>
                   <div>
-                    <p className="eyebrow mb-2">Lösung</p>
+                    <p className="section-label mb-2 !text-xs">Lösung</p>
                     <p className="text-sm text-dark-gray">{c.loesung}</p>
                   </div>
                   <div>
-                    <p className="eyebrow mb-2">Ergebnis</p>
+                    <p className="section-label mb-2 !text-xs">Ergebnis</p>
                     <p className="text-sm text-dark-gray">{c.ergebnis}</p>
                   </div>
                 </div>
+
+                {/* Screenshot (wenn vorhanden) */}
+                {c.screenshot && (
+                  <div className="mt-4">
+                    <Image
+                      src={c.screenshot}
+                      alt={c.screenshotAlt || c.name}
+                      width={600}
+                      height={340}
+                      className="w-full max-w-lg rounded-lg border border-sand-border object-cover"
+                    />
+                    {c.screenshotCredit && (
+                      <p className="text-[0.6rem] text-mid-gray mt-1">Bildrechte: {c.screenshotCredit}</p>
+                    )}
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -524,7 +584,7 @@ export default function HomePage() {
       </section>
 
       {/* ============================================
-          S10: ÜBER LARS – Schwarz
+          S10: MEIN HINTERGRUND – Schwarz
           ============================================ */}
       <section className="py-20 bg-black text-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -540,63 +600,81 @@ export default function HomePage() {
                   className="object-cover object-top w-full h-full"
                 />
               </div>
-              {/* Zertifikate als Logo-Grid unter dem Foto */}
-              <div className="grid grid-cols-3 md:grid-cols-5 gap-3">
+
+              {/* Zertifikate als Icon-Grid mit expandierbaren Details */}
+              <div className="grid grid-cols-5 gap-3">
                 {zertifikate.map((z) => (
-                  <a
-                    key={z.title}
-                    href={z.href}
-                    target={z.href.startsWith("http") ? "_blank" : "_self"}
-                    rel={z.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                    className="bg-white/10 hover:bg-white/20 transition-colors okai-shape-sm p-3 flex flex-col items-center text-center gap-2"
-                    title={`${z.title} – ${z.sub}`}
-                  >
-                    {z.logo ? (
-                      <Image src={z.logo} alt={z.title} width={48} height={48} className="h-10 w-auto object-contain" />
-                    ) : (
-                      <IconShield size={28} className="text-bright-red" />
+                  <div key={z.title} className="group relative">
+                    <a
+                      href={z.href || "#"}
+                      target={z.href?.startsWith("http") ? "_blank" : "_self"}
+                      rel={z.href?.startsWith("http") ? "noopener noreferrer" : undefined}
+                      className="bg-white/10 hover:bg-white/20 transition-colors rounded-xl p-3 flex flex-col items-center text-center gap-2 w-full"
+                      title={`${z.title} – ${z.sub}`}
+                    >
+                      <ZertifikatIcon type={z.icon} size={28} />
+                      <span className="text-[0.6rem] leading-tight text-sand-border">{z.title}</span>
+                    </a>
+
+                    {/* Expandierbares Dropdown bei Hover – für Zertifikate, Awards, Bücher */}
+                    {z.expandable && (
+                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-dark-gray border border-mid-gray rounded-lg p-3 min-w-[180px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-10 shadow-xl">
+                        <p className="text-[0.65rem] font-semibold text-sand-border mb-2">{z.title}</p>
+                        {z.certificates?.map((cert) => (
+                          <a
+                            key={cert.name}
+                            href={cert.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block text-xs text-sand-border hover:text-bright-red transition-colors py-1"
+                          >
+                            {cert.name}
+                          </a>
+                        ))}
+                        {z.awards?.map((award) => (
+                          <a
+                            key={award.name}
+                            href={award.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block text-xs text-sand-border hover:text-bright-red transition-colors py-1"
+                          >
+                            {award.name}
+                          </a>
+                        ))}
+                        {z.books?.map((book) => (
+                          <div key={book.name} className="flex items-center gap-2 py-1">
+                            <Image src={book.img} alt={book.name} width={30} height={40} className="h-8 w-auto object-cover rounded" />
+                            <span className="text-xs text-sand-border">{book.name}</span>
+                          </div>
+                        ))}
+                      </div>
                     )}
-                    <span className="text-[0.65rem] leading-tight text-sand-border">{z.title}</span>
-                  </a>
-                ))}
-              </div>
-              {/* Effie Awards Detail */}
-              <div id="effie-awards" className="mt-4 flex flex-wrap gap-2">
-                {effieAwards.map((e) => (
-                  <a
-                    key={e.name}
-                    href={e.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs text-sand-border hover:text-bright-red transition-colors underline decoration-dotted"
-                  >
-                    Effie: {e.name}
-                  </a>
+                  </div>
                 ))}
               </div>
             </div>
 
             {/* Text */}
             <div>
-              <p className="eyebrow !text-bright-red mb-3">Über Lars</p>
-              <h2 className="mb-6 text-white">Strategy Director, Mentor und TÜV-zertifizierter Berater für angewandte KI-Transformation.</h2>
+              <p className="section-label mb-3">Mein Hintergrund</p>
+              <h2 className="mb-6 text-white">
+                Strategy Director, Mentor und<br />
+                TÜV-zertifizierter Berater<br />
+                für angewandte KI-Transformation.
+              </h2>
               <p className="text-sand-border mb-4">
-                Sein Hintergrund reicht von Bankausbildung und BWL bis zu vielen Jahren in Strategie und Beratung mit Einblicken in unterschiedlichste Branchen – von Finanzen, Automobil und Konsumgütern bis zu Industrie, Verbänden und Sport.
+                Diplom-Betriebswirt mit vielen Jahren Erfahrung in Strategie und Beratung – von Finanzen, Automobil und Konsumgütern bis zu Industrie, Verbänden und Sport. Heute unterstütze ich Unternehmen dabei, KI nicht als Hype zu betrachten, sondern als anwendbaren Hebel für bessere Entscheidungen und wirksamere Prozesse.
               </p>
               <p className="text-sand-border mb-4">
-                Heute unterstützt er Unternehmen dabei, KI nicht als Hype zu betrachten, sondern als anwendbaren Hebel für bessere Entscheidungen, wirksamere Prozesse und neue Formen der Zusammenarbeit. Sein Fokus liegt auf verständlicher Vermittlung, praxisnaher Umsetzung und der Frage, wie KI im Alltag wirklich anschlussfähig wird.
+                Mein Fokus liegt auf verständlicher Vermittlung, praxisnaher Umsetzung und der Frage, wie KI im Alltag wirklich anschlussfähig wird.
+              </p>
+              <p className="text-sand-border mb-4">
+                Als Co-Autor zweier Fachbücher zu Markeninnovation und KI-Transformation bringe ich analytische Tiefe und strategisches Denken zusammen.
               </p>
               <p className="text-sand-border mb-8">
                 Denn KI einzuführen bedeutet nicht nur, neue Technologien zu nutzen, sondern Veränderung sinnvoll zu gestalten.
               </p>
-              {/* Bücher */}
-              <div className="flex gap-4 mb-8">
-                <Image src="/assets/buch-brand-innovation.jpg" alt="Brand Innovation (Buch)" width={80} height={110} className="h-28 w-auto object-cover okai-shape-sm shadow-lg" />
-                <Image src="/assets/buch-ki-mensch-wandel.jpg" alt="KI, Mensch, Wandel (Buch)" width={80} height={110} className="h-28 w-auto object-cover okai-shape-sm shadow-lg" />
-              </div>
-              <Link href="/ueber-lars" className="inline-flex items-center gap-2 text-sm font-semibold text-bright-red hover:text-white transition-colors">
-                Mehr über Lars <IconArrowRight size={14} />
-              </Link>
             </div>
           </div>
         </div>
@@ -607,13 +685,14 @@ export default function HomePage() {
           ============================================ */}
       <section id="kontakt" className="py-20 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="section-label mb-3">Kontakt</p>
           <h2 className="mb-4">Lass uns reden.</h2>
           <p className="text-dark-gray mb-12 max-w-lg">
             Kein Formular-Ping-Pong. Einfach einen Termin wählen – oder direkt schreiben.
           </p>
           <div className="grid md:grid-cols-2 gap-12">
             <div>
-              <p className="eyebrow mb-4">Termin buchen</p>
+              <p className="section-label mb-4 !text-xs">Termin buchen</p>
               <BookingCalendar />
             </div>
             <div className="flex flex-col justify-center gap-6">
@@ -646,7 +725,7 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-12">
             <div>
-              <p className="eyebrow mb-3">Blog</p>
+              <p className="section-label mb-3">Blog</p>
               <h2>Gedanken zu KI, Strategie und Praxis.</h2>
             </div>
             <a
@@ -659,14 +738,13 @@ export default function HomePage() {
             </a>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
-            {/* Blog-Teaser Karten – verlinken auf Innolea Blog */}
             <a
               href="https://innolea-institut.com/insights/"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white okai-shape-md p-6 hover:shadow-lg transition-shadow group"
+              className="bg-white rounded-xl p-6 hover:shadow-lg transition-shadow group"
             >
-              <p className="eyebrow !text-bright-red mb-2">Insights</p>
+              <p className="section-label !text-xs mb-2">Insights</p>
               <h3 className="mb-2 group-hover:text-bright-red transition-colors">KI im Mittelstand: Wo anfangen?</h3>
               <p className="text-sm text-dark-gray">Warum die meisten KMU nicht am Wissen scheitern, sondern an der Reihenfolge.</p>
             </a>
@@ -674,9 +752,9 @@ export default function HomePage() {
               href="https://innolea-institut.com/insights/"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white okai-shape-md p-6 hover:shadow-lg transition-shadow group"
+              className="bg-white rounded-xl p-6 hover:shadow-lg transition-shadow group"
             >
-              <p className="eyebrow !text-bright-red mb-2">Praxis</p>
+              <p className="section-label !text-xs mb-2">Praxis</p>
               <h3 className="mb-2 group-hover:text-bright-red transition-colors">KI-Policy: Warum ein Manifest reicht</h3>
               <p className="text-sm text-dark-gray">Statt 80-Seiten-Richtlinien: Wie ein kurzes, klares Dokument mehr bewirkt.</p>
             </a>
@@ -684,9 +762,9 @@ export default function HomePage() {
               href="https://innolea-institut.com/insights/"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white okai-shape-md p-6 hover:shadow-lg transition-shadow group"
+              className="bg-white rounded-xl p-6 hover:shadow-lg transition-shadow group"
             >
-              <p className="eyebrow !text-bright-red mb-2">Strategie</p>
+              <p className="section-label !text-xs mb-2">Strategie</p>
               <h3 className="mb-2 group-hover:text-bright-red transition-colors">Von der KI-Idee zum Prototyp</h3>
               <p className="text-sm text-dark-gray">Der Weg von der ersten Idee zum funktionierenden KI-Werkzeug im Betrieb.</p>
             </a>
