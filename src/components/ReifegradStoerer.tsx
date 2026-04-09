@@ -1,36 +1,38 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { IconArrowRight } from "./Icons";
+import Image from "next/image";
+
+/* ============================================
+   TÜV-Störer – permanentes Element rechts
+
+   Zeigt das TÜV-Siegel als seitliches Element
+   auf allen Seiten. Hintergrundfarbe passend
+   zum grauen Rand des TÜV-Siegels.
+   Text steht unter dem Siegel.
+   ============================================ */
 
 export function ReifegradStoerer() {
-  const pathname = usePathname();
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    /* Nach 1.5s sanft einblenden */
-    const timer = setTimeout(() => setVisible(true), 1500);
-    return () => clearTimeout(timer);
-  }, []);
-
-  /* Auf der Reifegrad-Check-Seite ausblenden */
-  if (pathname?.startsWith("/reifegrad-check")) return null;
-
   return (
-    <Link
-      href="/reifegrad-check"
-      className={`fixed right-0 bottom-24 z-40 flex items-center gap-3 bg-bright-red text-white pl-5 pr-4 py-3.5 okai-shape-lg shadow-xl hover:scale-105 transition-all duration-500 ${
-        visible ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
-      }`}
-      style={{ transitionProperty: "transform, opacity, scale" }}
+    <a
+      href="/assets/CR_Lars Fieck.pdf"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="fixed right-0 top-1/2 -translate-y-1/2 z-40 flex flex-col items-center bg-[#E8E8E8] px-3 pt-3 pb-2 okai-shape-lg shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all border border-[#D0D0D0]"
+      title="TÜV-zertifizierter Manager für angewandte KI-Transformation"
+      aria-label="TÜV-Zertifikat anzeigen"
     >
-      <div>
-        <p className="text-sm font-bold leading-tight">KI-Reifegrad-Check</p>
-        <p className="text-[0.7rem] font-medium opacity-90">5 Min. · Kostenlos</p>
-      </div>
-      <IconArrowRight size={18} className="shrink-0" />
-    </Link>
+      {/* TÜV-Siegel – 2.5x grösser (von 44px auf 110px) */}
+      <Image
+        src="/assets/tuev-testmark.jpg"
+        alt="TÜV-Testmark – Zertifizierter Manager für angewandte KI-Transformation"
+        width={130}
+        height={130}
+        className="h-[110px] w-[110px] object-contain shrink-0"
+      />
+      {/* Text unter dem Siegel */}
+      <p className="text-[0.65rem] font-semibold leading-tight text-dark-gray mt-2 text-center">
+        TÜV-zertifiziert
+      </p>
+    </a>
   );
 }

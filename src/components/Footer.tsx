@@ -36,7 +36,6 @@ export function Footer() {
           <div>
             <h4 className="text-sm font-semibold mb-4 text-mid-gray uppercase tracking-wider">Über OKAI</h4>
             <ul className="space-y-2.5">
-              <li><Link href="/ueber-lars" className="text-sm text-sand-border hover:text-off-white transition-colors">Über Lars</Link></li>
               <li><Link href="/werte" className="text-sm text-sand-border hover:text-off-white transition-colors">Werte & KI-Policy</Link></li>
               <li><Link href="/reifegrad-check" className="text-sm text-sand-border hover:text-off-white transition-colors">Reifegrad-Check</Link></li>
               <li><Link href="/mastery-roadmap" className="text-sm text-sand-border hover:text-off-white transition-colors">OKAI Mastery Roadmap</Link></li>
@@ -49,6 +48,7 @@ export function Footer() {
             <ul className="space-y-2.5">
               <li><Link href="/datenschutz" className="text-sm text-sand-border hover:text-off-white transition-colors">Datenschutz</Link></li>
               <li><Link href="/impressum" className="text-sm text-sand-border hover:text-off-white transition-colors">Impressum</Link></li>
+              <li><Link href="/agb" className="text-sm text-sand-border hover:text-off-white transition-colors">AGB</Link></li>
             </ul>
           </div>
         </div>
