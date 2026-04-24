@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { BOOKING_EMAIL, SLOT_DURATION_MINUTES } from "@/lib/calendar-config";
 import { createBookingToken, type BookingData } from "@/lib/booking-token";
+import { adminNotificationEmail } from "@/lib/email-html";
 
 /* ============================================
    API-Route: Terminanfrage
@@ -9,12 +10,12 @@ import { createBookingToken, type BookingData } from "@/lib/booking-token";
    POST /api/calendar/book
    Body: { date, time, name, email, phone?, message? }
 
-   Ablauf:
+   Was passiert:
    1. Anfrage validieren
-   2. Sicheren Bestätigungslink für Lars erstellen
-   3. Benachrichtigung an Lars mit Bestätigungs-Button
-   4. Eingangsbestätigung an Buchenden (noch kein ICS)
-      → ICS kommt nach Lars' Bestätigung via /api/calendar/confirm
+   2. Sicheren Bestätigungslink + Ablehnungslink erstellen
+   3. HTML-Benachrichtigung an Lars (mit zwei Buttons)
+   4. KEINE sofortige Mail an Buchenden
+      → Buchende bekommen erst eine Mail wenn Lars bestätigt oder ablehnt
    ============================================ */
 
 interface BookingRequest {
@@ -61,7 +62,7 @@ export async function POST(request: NextRequest) {
     const datum = `${day}.${month}.${year}`;
     const zeit = `${body.time} – ${endDate.getHours().toString().padStart(2, "0")}:${endDate.getMinutes().toString().padStart(2, "0")} Uhr`;
 
-    /* Sicheren Bestätigungstoken erstellen */
+    /* Token für Bestätigung + Ablehnung erstellen */
     const bookingData: BookingData = {
       date: body.date,
       time: body.time,
@@ -74,66 +75,31 @@ export async function POST(request: NextRequest) {
     };
     const token = createBookingToken(bookingData);
     const confirmUrl = `${BASE_URL}/termin-bestaetigen?token=${token}`;
+    const declineUrl  = `${BASE_URL}/termin-bestaetigen?token=${token}&action=ablehnen`;
 
-    /* Mail an Lars – mit Bestätigungs-Button */
-    const adminText = [
-      `Neue Terminanfrage`,
-      ``,
-      `Name:       ${body.name}`,
-      `E-Mail:     ${body.email}`,
-      `Telefon:    ${body.phone || "nicht angegeben"}`,
-      `Datum:      ${datum}`,
-      `Zeit:       ${zeit}`,
-      body.message ? `Nachricht:  ${body.message}` : ``,
-      ``,
-      `════════════════════════════════════`,
-      `Termin bestätigen (Kalendereinladung wird automatisch gesendet):`,
-      ``,
+    /* HTML-Mail an Lars */
+    const adminHtml = adminNotificationEmail({
+      name: body.name,
+      email: body.email,
+      phone: body.phone || "",
+      datum,
+      zeit,
+      message: body.message || "",
       confirmUrl,
-      `════════════════════════════════════`,
-    ].filter(Boolean).join("\n");
-
-    /* Eingangsbestätigung an Buchenden */
-    const bookerText = [
-      `Hallo ${body.name},`,
-      ``,
-      `vielen Dank für deine Terminanfrage. Ich habe sie erhalten und bestätige dir gleich.`,
-      ``,
-      `Deine Anfrage:`,
-      `Datum:   ${datum}`,
-      `Zeit:    ${zeit}`,
-      ``,
-      `Nach der Bestätigung bekommst du automatisch eine Kalendereinladung – `,
-      `damit trägst du den Termin mit einem Klick in Apple Kalender, Google Calendar`,
-      `oder Outlook ein.`,
-      ``,
-      `Bis gleich,`,
-      `Lars-Oliver Fiëck`,
-      `OKAI – KI-Beratung für KMU`,
-      `hallo@ok-ai.de · www.ok-ai.de`,
-    ].join("\n");
+      declineUrl,
+    });
 
     if (resend) {
-      /* 1. Benachrichtigung an Lars */
       await resend.emails.send({
         from: "OKAI Terminbuchung <hallo@ok-ai.de>",
         to: BOOKING_EMAIL,
         subject: `Terminanfrage: ${body.name} – ${datum} ${body.time} Uhr`,
-        text: adminText,
-      });
-
-      /* 2. Eingangsbestätigung an Buchenden */
-      await resend.emails.send({
-        from: "Lars-Oliver Fiëck | OKAI <hallo@ok-ai.de>",
-        to: body.email,
-        subject: `Deine Terminanfrage bei OKAI – ${datum}`,
-        text: bookerText,
+        html: adminHtml,
       });
 
       console.log(`[Book] Anfrage registriert: ${body.name} am ${datum} ${body.time}`);
     } else {
-      console.log("=== TERMINANFRAGE (kein Resend-Key) ===");
-      console.log(adminText);
+      console.log(`[Book] Kein Resend-Key – Anfrage: ${body.name} am ${datum}`);
     }
 
     return NextResponse.json({
