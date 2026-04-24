@@ -72,15 +72,43 @@ export async function POST(request: NextRequest) {
       "Diese E-Mail wurde automatisch von der OKAI Website generiert.",
     ].join("\n");
 
+    /* Bestätigungstext für den Buchenden */
+    const confirmationText = [
+      `Hallo ${body.name},`,
+      "",
+      "vielen Dank für deine Terminanfrage. Ich habe sie erhalten und melde mich in Kürze bei dir.",
+      "",
+      "Dein gebuchter Termin:",
+      `Datum:   ${datum}`,
+      `Zeit:    ${zeit}`,
+      "",
+      "Falls du Fragen hast oder den Termin ändern möchtest, antworte einfach auf diese Mail.",
+      "",
+      "Bis bald,",
+      "Lars-Oliver Fiëck",
+      "OKAI – KI-Beratung für KMU",
+      "hallo@ok-ai.de · www.ok-ai.de",
+    ].join("\n");
+
     /* E-Mail senden (oder Fallback auf Console) */
     if (resend) {
+      /* 1. Benachrichtigung an OKAI */
       await resend.emails.send({
-        from: "OKAI Terminbuchung <onboarding@resend.dev>",
+        from: "OKAI Terminbuchung <hallo@ok-ai.de>",
         to: BOOKING_EMAIL,
-        subject: `Terminanfrage: ${body.name} am ${datum}`,
+        subject: `Neue Terminanfrage: ${body.name} am ${datum}`,
         text: emailText,
       });
-      console.log(`[Booking] E-Mail gesendet an ${BOOKING_EMAIL}`);
+
+      /* 2. Bestätigung an den Buchenden */
+      await resend.emails.send({
+        from: "Lars-Oliver Fiëck | OKAI <hallo@ok-ai.de>",
+        to: body.email,
+        subject: `Deine Terminanfrage bei OKAI – ${datum}`,
+        text: confirmationText,
+      });
+
+      console.log(`[Booking] E-Mails gesendet: Benachrichtigung an ${BOOKING_EMAIL}, Bestätigung an ${body.email}`);
     } else {
       /* Kein API-Key: Fallback auf Console-Log */
       console.log("=== NEUE TERMINANFRAGE (kein Resend-Key) ===");

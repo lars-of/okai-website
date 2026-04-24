@@ -9,8 +9,7 @@
 
 /* E-Mail für Buchungsbenachrichtigungen
    Zum Ändern einfach hier die Adresse austauschen */
-export const BOOKING_EMAIL = "lars@fieck.de";
-// export const BOOKING_EMAIL = "hallo@ok-ai.de";  // <- später umstellen
+export const BOOKING_EMAIL = "hallo@ok-ai.de";
 
 /* iCal-URL zum Lesen der belegten Zeiten (aus Umgebungsvariable oder Fallback) */
 export const ICAL_URL =
