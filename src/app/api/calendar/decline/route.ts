@@ -48,9 +48,9 @@ export async function POST(request: NextRequest) {
     if (resend) {
       /* 1. Ablehnung an Buchenden */
       await resend.emails.send({
-        from: "Lars-Oliver Fiëck | OKAI <hallo@ok-ai.de>",
+        from: "OKAI <hallo@ok-ai.de>",
         to: booking.email,
-        subject: `Zu deiner Terminanfrage bei OKAI – ${booking.datum}`,
+        subject: `Zu deiner Terminanfrage bei OKAI - ${booking.datum}`,
         html: bookerHtml,
       });
 
@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
       await resend.emails.send({
         from: "OKAI System <hallo@ok-ai.de>",
         to: BOOKING_EMAIL,
-        subject: `✗ Abgelehnt: ${booking.name} – ${booking.datum} ${booking.time} Uhr`,
+        subject: `Abgelehnt: ${booking.name} - ${booking.datum} ${booking.time} Uhr`,
         html: `<p style="font-family:Arial,sans-serif;font-size:15px;">Terminanfrage von <strong>${booking.name}</strong> (${booking.email}) am ${booking.datum} um ${booking.time} Uhr wurde abgelehnt.${alternative ? `<br><br>Vorgeschlagener Alternativtermin: <strong>${alternative}</strong>` : ""}</p>`,
       });
 

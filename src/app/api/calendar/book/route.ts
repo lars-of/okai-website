@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
     const endDate = new Date(startDate.getTime() + SLOT_DURATION_MINUTES * 60 * 1000);
 
     const datum = `${day}.${month}.${year}`;
-    const zeit = `${body.time} – ${endDate.getHours().toString().padStart(2, "0")}:${endDate.getMinutes().toString().padStart(2, "0")} Uhr`;
+    const zeit = `${body.time} bis ${endDate.getHours().toString().padStart(2, "0")}:${endDate.getMinutes().toString().padStart(2, "0")} Uhr`;
 
     /* Token für Bestätigung + Ablehnung erstellen */
     const bookingData: BookingData = {
@@ -93,7 +93,7 @@ export async function POST(request: NextRequest) {
       await resend.emails.send({
         from: "OKAI Terminbuchung <hallo@ok-ai.de>",
         to: BOOKING_EMAIL,
-        subject: `Terminanfrage: ${body.name} – ${datum} ${body.time} Uhr`,
+        subject: `Terminanfrage: ${body.name} - ${datum} ${body.time} Uhr`,
         html: adminHtml,
       });
 

@@ -128,7 +128,9 @@ export function getGoogleCalendarLink(params: {
   return url.toString();
 }
 
-/* Outlook / Microsoft 365 – direkter Link */
+/* Outlook / Microsoft 365 – direkter Link
+   Nutzt outlook.office.com (Business / Microsoft 365),
+   nicht outlook.live.com (das ist für private Outlook.com-Konten). */
 export function getOutlookLink(params: {
   title: string;
   description: string;
@@ -138,7 +140,8 @@ export function getOutlookLink(params: {
   const { title, description, startDate, durationMinutes } = params;
   const endDate = new Date(startDate.getTime() + durationMinutes * 60 * 1000);
 
-  const url = new URL("https://outlook.live.com/calendar/0/deeplink/compose");
+  const url = new URL("https://outlook.office.com/calendar/0/deeplink/compose");
+  url.searchParams.set("path", "/calendar/action/compose");
   url.searchParams.set("rru", "addevent");
   url.searchParams.set("subject", title);
   url.searchParams.set("startdt", startDate.toISOString());

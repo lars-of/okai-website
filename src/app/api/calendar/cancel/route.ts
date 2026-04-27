@@ -54,9 +54,9 @@ export async function POST(request: NextRequest) {
     if (resend) {
       /* 1. Bestätigung an Buchenden */
       await resend.emails.send({
-        from: "Lars-Oliver Fiëck | OKAI <hallo@ok-ai.de>",
+        from: "OKAI <hallo@ok-ai.de>",
         to: booking.email,
-        subject: `Absage bestätigt – OKAI-Termin am ${booking.datum}`,
+        subject: `Absage bestaetigt - OKAI-Termin am ${booking.datum}`,
         html: bookerHtml,
       });
 
@@ -64,7 +64,7 @@ export async function POST(request: NextRequest) {
       await resend.emails.send({
         from: "OKAI System <hallo@ok-ai.de>",
         to: BOOKING_EMAIL,
-        subject: `⚠ Absage: ${booking.name} – ${booking.datum} ${booking.time} Uhr`,
+        subject: `Absage: ${booking.name} - ${booking.datum} ${booking.time} Uhr`,
         html: adminHtml,
       });
 

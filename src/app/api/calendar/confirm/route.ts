@@ -11,11 +11,6 @@ import { createBookingToken } from "@/lib/booking-token";
 
    POST /api/calendar/confirm
    Body: { token: string }
-
-   1. Token prüfen
-   2. ICS-Datei generieren
-   3. HTML-Bestätigungsmail + ICS-Anhang an Buchenden
-   4. ICS-Kopie an Lars
    ============================================ */
 
 const resend = process.env.RESEND_API_KEY
@@ -28,7 +23,6 @@ export async function POST(request: NextRequest) {
   try {
     const { token } = await request.json();
 
-    /* Token prüfen */
     const booking = verifyBookingToken(token);
     if (!booking) {
       return NextResponse.json(
@@ -37,13 +31,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    /* Datum rekonstruieren */
     const [year, month, day] = booking.date.split("-").map(Number);
     const [hours, minutes] = booking.time.split(":").map(Number);
     const startDate = new Date(year, month - 1, day, hours, minutes);
 
-    const title = `Gespräch mit Lars-Oliver Fiëck | OKAI`;
-    const description = `Bestätigter Termin mit OKAI – KI-Beratung für KMU.\n\nBei Fragen: hallo@ok-ai.de`;
+    /* Titel und Beschreibung – ohne Personennamen, ohne Telefon */
+    const title = `Gespräch mit OKAI`;
+    const description = `Bestätigter Termin mit OKAI - KI-Beratung für KMU.\n\nBei Fragen einfach auf die Bestätigungsmail antworten oder an hallo@ok-ai.de schreiben.`;
 
     /* ICS generieren */
     const icsContent = generateICS({
@@ -51,7 +45,7 @@ export async function POST(request: NextRequest) {
       description,
       startDate,
       durationMinutes: SLOT_DURATION_MINUTES,
-      organizerName: "Lars-Oliver Fiëck | OKAI",
+      organizerName: "OKAI",
       organizerEmail: "hallo@ok-ai.de",
       attendeeEmail: booking.email,
       attendeeName: booking.name,
@@ -62,7 +56,7 @@ export async function POST(request: NextRequest) {
     const outlookLink = getOutlookLink({ title, description, startDate, durationMinutes: SLOT_DURATION_MINUTES });
 
     /* Absage-Link für den Buchenden */
-    const cancelToken = createBookingToken(booking); // gleicher Token, anderer Endpunkt
+    const cancelToken = createBookingToken(booking);
     const cancelUrl = `${BASE_URL}/termin-absagen?token=${cancelToken}`;
 
     /* HTML-Bestätigungsmail */
@@ -81,20 +75,20 @@ export async function POST(request: NextRequest) {
     };
 
     if (resend) {
-      /* 1. Bestätigung an Buchenden */
+      /* 1. Bestätigung an Buchenden – Absender ohne Personennamen */
       await resend.emails.send({
-        from: "Lars-Oliver Fiëck | OKAI <hallo@ok-ai.de>",
+        from: "OKAI <hallo@ok-ai.de>",
         to: booking.email,
-        subject: `Bestätigt: Dein OKAI-Termin am ${booking.datum}`,
+        subject: `Bestaetigt: Dein OKAI-Termin am ${booking.datum}`,
         html: bookerHtml,
         attachments: [icsAttachment],
       });
 
-      /* 2. ICS-Kopie an Lars */
+      /* 2. ICS-Kopie an Lars (interne Notification) */
       await resend.emails.send({
         from: "OKAI System <hallo@ok-ai.de>",
         to: BOOKING_EMAIL,
-        subject: `✓ Bestätigt: ${booking.name} – ${booking.datum} ${booking.time} Uhr`,
+        subject: `Bestaetigt: ${booking.name} - ${booking.datum} ${booking.time} Uhr`,
         html: adminNotificationEmail({
           name: booking.name,
           email: booking.email,
@@ -102,9 +96,9 @@ export async function POST(request: NextRequest) {
           datum: booking.datum,
           zeit: booking.zeit,
           message: booking.message || "",
-          confirmUrl: "", // schon bestätigt
+          confirmUrl: "",
           declineUrl: "",
-        }).replace("Neue Buchungsanfrage", "Termin bestätigt – Kalendereinladung gesendet")
+        }).replace("Neue Buchungsanfrage", "Termin bestätigt - Kalendereinladung gesendet")
           .replace(/Termin bestätigen.*?ablehnen.*?<\/table>/s, ""),
         attachments: [icsAttachment],
       });
